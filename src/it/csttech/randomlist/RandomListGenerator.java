@@ -1,5 +1,7 @@
 package it.csttech.randomlist;
 
-public class RandomListGenerator {
+import java.security.SecureRandom;
+
+public class RandomListGenerator extends SecureRandom{
 
 }

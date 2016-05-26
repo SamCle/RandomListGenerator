@@ -1,0 +1,89 @@
+<project name="0002cAntizzato" basedir="." default="remain"> <!-- c'era main-->
+	<description>
+		A sample build file for this project
+	</description>
+
+	<property name="main-class"  value="it.csttech.randomlist"/>
+
+	<property name="src.dir"     value="src"/>
+	<property name="build.dir"   value="bin"/>
+	<property name="doc.dir"     value="doc"/> <!-- documentazione -->
+	<property name="lib.dir"     value="lib"/> <!-- libreraie esterne -->
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.dir"     value="${build.dir}/jar"/>
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
+
+	<presetdef name="javac">
+		<javac includeantruntime="false" />
+	</presetdef>
+
+	<target name="clean" description="Tidy up the workspace">
+		<delete dir="${build.dir}"/>
+		<delete dir="${doc.dir}"/>
+		<delete>
+			<fileset defaultexcludes="no" dir="${src.dir}" includes="**/*~"/>
+		</delete>
+	</target>
+
+	<target name="init" description="setup project directories">
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${doc.dir}"/>
+	</target>
+
+	<target name="compile" depends="init" description="Compile java sources">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+	</target>
+
+	<target name="jar" depends="compile" description="Create .jar file">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="jar" description="Run .jar file of the project">
+		<java fork="true" classname="${main-class}">
+			<classpath>
+				<path refid="classpath"/>
+				<path location="${jar.dir}/${ant.project.name}.jar"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="clean-build" depends="clean,jar " description="Compile and execute"/>
+
+	<!-- roba mia, tradizione dice che non funziona modificato, c'era run tra clean e doc-->
+	<target name="main" depends="clean,run,doc" description="Compile, execute and Doc Creations"/>
+
+	<target name="remain" depends="clean,compile" description="Compile, execute with args and Doc Creations"/>
+
+	<!-- Generate javadocs for current project into ${doc.dir} -->
+	<target name="doc" depends="init" description="Generate documentation JavaDoc">
+		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}">
+			<bottom><![CDATA[<i>Copyright &#169; 2016 Dummy Corp. All Rights Reserved.</i>]]></bottom>
+			<!--Tag personalizzato nella costruzione del doc -->
+			<tag name="todo." scope="all" description="To do:"/>
+		</javadoc>
+	</target>
+
+	<!-- Run Main with args -->
+	<target name="run-args" depends="jar" description="Run the project. expected -Dargs='-p ...'">
+		<java fork="true" classname="${main-class}">
+			<arg value="${arg0}"/>
+			<classpath>
+				<path refid="classpath"/>
+				<path location="${jar.dir}/${ant.project.name}.jar"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="input-runargs" unless="args" description="prompts for command line arguments if necessary">
+		<input addProperty="args" message="Type the desired command line arguments:"/>
+	</target>
+
+</project>

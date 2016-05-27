@@ -3,11 +3,11 @@ package it.csttech;
 import java.io.*;
 import java.util.*;
 import java.util.LinkedHashMap;
-import org.apache.commons.*;
 import org.apache.commons.cli.*;
 
 class OptionsHandler {
 
+  public static final String DEFAULT_PROPERTIES = "config/etltools_default.properties";
   protected Map<String,String>  sOptions;
   protected Map<String,Integer> iOptions;
   protected Map<String,Double>  dOptions;
@@ -19,11 +19,12 @@ class OptionsHandler {
 
     Options options = new Options();
     DefaultParser parser = new DefaultParser();
-    options.addOption(new Option("h", "help",    false, "Shows help."                 ));
-    options.addOption(new Option("m", "minimum", true,  "Lower bound for the result." ));
-    options.addOption(new Option("M", "Maximum", true,  "Upper bound for the result." ));
-    options.addOption(new Option("s", "size",    true,  "Size of the result."         ));
-    options.addOption(new Option("f", "file",    true,  "Output file name."           ));
+    options.addOption(new Option("h", "help",       false, "Shows help."                 ));
+    options.addOption(new Option("m", "minimum",    true,  "Lower bound for the result." ));
+    options.addOption(new Option("M", "Maximum",    true,  "Upper bound for the result." ));
+    options.addOption(new Option("s", "size",       true,  "Size of the result."         ));
+    options.addOption(new Option("f", "file",       true,  "Output file name."           ));
+    options.addOption(new Option("p", "properties", true,  "Config file name."           ));
 
     CommandLine commandLine = null;
 
@@ -38,11 +39,24 @@ class OptionsHandler {
       return;
     }
 
-    iOptions.put("m", Integer.parseInt(commandLine.getOptionValue("m",     "0")));
-    iOptions.put("M", Integer.parseInt(commandLine.getOptionValue("M", "99999")));
-    iOptions.put("s", Integer.parseInt(commandLine.getOptionValue("s", " 1000")));
-    sOptions.put("f", commandLine.getOptionValue("f", "output.txt")));
+    String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
+    Properties properties = readProperties(propFile);
 
+    iOptions.put("m", Integer.parseInt(commandLine.getOptionValue("m", properties.getProperty("default.minimum"  ))));
+    iOptions.put("M", Integer.parseInt(commandLine.getOptionValue("M", properties.getProperty("default.Maximum"  ))));
+    iOptions.put("s", Integer.parseInt(commandLine.getOptionValue("s", properties.getProperty("default.size"     ))));
+    sOptions.put("f",                  commandLine.getOptionValue("f", properties.getProperty("default.outputFile")));
+
+  }
+
+  protected static Properties readProperties( String propFile ){
+    Properties prop = new Properties();
+    try(InputStream input = new FileInputStream(propFile)) {
+      prop.load(input);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return prop;
   }
 
 }

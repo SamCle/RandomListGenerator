@@ -2,4 +2,4 @@
 
 main=RandomListGenerator
 
-java -cp bin it.csttech.$main
+java -cp bin:lib/*  it.csttech.$main $*

@@ -11,8 +11,8 @@ public class UniformRandom extends SecureRandom {
 	long iPrevious;
 
 	private boolean checkNext(long iNext) {
-		
+		return true;
 	}
-	
+
 
 }

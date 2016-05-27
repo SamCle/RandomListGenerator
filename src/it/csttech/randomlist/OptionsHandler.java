@@ -8,8 +8,9 @@ import org.apache.commons.cli.*;
 
 class OptionsHandler {
 
-  protected Map<String,String> sOptions;
+  protected Map<String,String>  sOptions;
   protected Map<String,Integer> iOptions;
+  protected Map<String,Double>  dOptions;
 
   OptionsHandler(String[] args){
 
@@ -41,6 +42,7 @@ class OptionsHandler {
     iOptions.put("M", Integer.parseInt(commandLine.getOptionValue("M", "99999")));
     iOptions.put("s", Integer.parseInt(commandLine.getOptionValue("s", " 1000")));
     sOptions.put("f", commandLine.getOptionValue("f", "output.txt")));
+    
 
     /*    String input = ""; // calcola o legge l'input e ne ricava l'estensione
     if(cmd.hasOption("s")){

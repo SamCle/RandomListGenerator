@@ -39,7 +39,7 @@ class OptionsHandler {
 
     iOptions.put("m", Integer.parseInt(commandLine.getOptionValue("m",     "0")));
     iOptions.put("M", Integer.parseInt(commandLine.getOptionValue("M", "99999")));
-    iOptions.put("n", Integer.parseInt(commandLine.getOptionValue("M", " 1000")));
+    iOptions.put("s", Integer.parseInt(commandLine.getOptionValue("s", " 1000")));
     sOptions.put("f", commandLine.getOptionValue("f", "output.txt")));
 
     /*    String input = ""; // calcola o legge l'input e ne ricava l'estensione

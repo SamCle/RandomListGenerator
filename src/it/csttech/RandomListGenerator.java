@@ -1,33 +1,43 @@
 package it.csttech;
 
+import it.csttech.randomlist.*;
+import java.io.*;
 import java.security.*;
 import java.util.*;
-import it.csttech.randomlist.*;
 
 public class RandomListGenerator {
 	public static void main(String[] args) {
 
+		boolean debugger = true;
 		OptionsHandler opt = new OptionsHandler(args);
 		if(opt.lOptions.size() == 0) {
 			return; 	// opt.lOptions.size() is equal to zero iff the help option has been invoked.
-						// In this case, we close the main immediately.
+			// In this case, we close the main immediately.
 		}
 
 		long iMin = opt.lOptions.get("m");
 		long iMax = opt.lOptions.get("M");
-		int iVar = opt.iOptions.get("v"); 
+		int iVar = opt.iOptions.get("v");
 		int iSize = opt.iOptions.get("s");
-		List<Long> list = new ArrayList<Long>(iSize);	
+		File outputFile = new File(opt.sOptions.get("f"));
+		List<Long> list = new ArrayList<Long>(iSize);
 		List<Long> separators = new ArrayList<Long>();
 		UniformRandom uniformRandom = new UniformRandom(iMin, iMax, iSize);
 
 		separators = setSeparators(iMin, iMax, iSize, iVar, uniformRandom);
 		list = setList(iSize, separators, uniformRandom);
 
-		// Dummy cycle to print to terminal; to be replaced with call to method which prints to file
-		for(int i = 0; i < iSize; i++) {
-			System.out.println(list.get(i));
+		try(PrintWriter printout = new PrintWriter( new BufferedWriter( new FileWriter(outputFile, debugger) ) )){
+			// Dummy cycle to print to terminal; to be replaced with call to method which prints to file
+			for(int i = 0; i < iSize; i++) {
+				printout.printf("%05d%n", list.get(i));
+				// 		System.out.println(list.get(i));
+			}
+
+		} catch (IOException e){
+			e.getMessage();
 		}
+
 	}
 
 	private static List<Long> setSeparators(long iMin, long iMax, int iSize, int iVar, UniformRandom uniformRandom) {
@@ -43,7 +53,7 @@ public class RandomListGenerator {
 		separators.add(iSize, iMax);
 
 		return separators;
-	}	
+	}
 
 	private static List<Long> setList(int iSize, List<Long> separators, UniformRandom uniformRandom) {
 		List<Long> list = new ArrayList<Long>(iSize);
@@ -55,10 +65,10 @@ public class RandomListGenerator {
 				list.add(i, point);
 				i++;
 			} else {}
+			}
+
+			return list;
 		}
 
-		return list;
+		//	ADD STATIC METHOD TO PRINT TO FILE WITH NECESSARY STYLE
 	}
-
-//	ADD STATIC METHOD TO PRINT TO FILE WITH NECESSARY STYLE
-}

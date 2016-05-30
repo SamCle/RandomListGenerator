@@ -35,12 +35,12 @@ public class UniformRandom {
 			return true;
 	}
 
+/*	NOT NEEDED
 	public long uniformNext()	{
 		long iNext = 0; //dummy for now
 		return iNext;
 	}
-	
-
+*/	
 	public double nextDouble() {
 		return secureRandom.nextDouble();
 	}

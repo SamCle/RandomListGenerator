@@ -5,7 +5,7 @@ import java.util.*;
 import java.text.*;
 import org.apache.commons.cli.*;
 
-class OptionsHandler {
+public class OptionsHandler {
 
   public static final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
   protected Map<String,String>  sOptions;

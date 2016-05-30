@@ -2,34 +2,52 @@ package it.csttech.randomlist;
 
 import java.security.*;
 
-
 public class UniformRandom {
 
-	SecureRandom secureRandom;
+	public SecureRandom secureRandom;
 
 	long iMin;
 	long iMax;
-	long iSize;
+	int iSize;
 	long iPrevious;
 
-	public UniformRandom(long iMin, long iMax, long iSize) {
+	public UniformRandom(long iMin, long iMax, int iSize) {
 		this.iMin = iMin;
 		this.iMax = iMax;
 		this.iSize = iSize;
-		try{
-		secureRandom = SecureRandom.getInstanceStrong();
-		} catch (NoSuchAlgorithmException e)
-		{
-			e.getMessage();
-		}
-	}
-
-	private boolean checkNext(long iNext) {
-		return true;
+		secureRandom = new SecureRandom();
+//		try{
+//		secureRandom = SecureRandom.getInstanceStrong();
+//		} catch (NoSuchAlgorithmException e)
+//		{
+//			e.getMessage();
+//		}
 	}
 
 	public void setIPrevious(long iPrevious){
 		this.iPrevious = iPrevious;
 	}
+
+	private boolean checkNext(long iNext) {
+		if (Math.abs(iNext - this.iPrevious) < 1)
+			return false;
+		else
+			return true;
+	}
+
+	public long uniformNext()	{
+		long iNext = 0; //dummy for now
+		return iNext;
+	}
 	
+
+	public double nextDouble() {
+		return secureRandom.nextDouble();
+	}
+	
+    public long nextLong() {
+		return secureRandom.nextLong();
+	}
+                
+
 }

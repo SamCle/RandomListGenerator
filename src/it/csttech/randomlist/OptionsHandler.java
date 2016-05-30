@@ -10,14 +10,12 @@ public class OptionsHandler {
   public static final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
   protected Map<String,String>  sOptions;
   protected Map<String,Integer> iOptions; //TODO: min max sono long, var e size sono int
-  protected Map<String,Double>  dOptions;
-  NumberFormat format;
+  protected Map<String,Long>    lOptions;
 
   OptionsHandler(String[] args){
 
     this.sOptions = new HashMap<String,String>(0);
     this.iOptions = new HashMap<String,Integer>(0);
-    this.dOptions = new HashMap<String,Double>(0);
 
     Options options = new Options();
     DefaultParser parser = new DefaultParser();
@@ -28,7 +26,6 @@ public class OptionsHandler {
     options.addOption(new Option("f", "file",       true,  "Output file name."            ));
     options.addOption(new Option("p", "properties", true,  "Config file name."            ));
     options.addOption(new Option("v", "variation",  true,  "Maximal change in boundaries."));
-    options.addOption(new Option("l", "language",   true,  "Language used for the locale."));
 
     CommandLine commandLine = null;
 
@@ -46,17 +43,11 @@ public class OptionsHandler {
     String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
     Properties properties = readProperties(propFile);
 
-    iOptions.put("m", Integer.parseInt(            commandLine.getOptionValue("m", properties.getProperty("default.minimum"   )))              );
-    iOptions.put("M", Integer.parseInt(            commandLine.getOptionValue("M", properties.getProperty("default.Maximum"   )))              );
-    iOptions.put("s", Integer.parseInt(            commandLine.getOptionValue("s", properties.getProperty("default.size"      )))              );
-    sOptions.put("f",                              commandLine.getOptionValue("f", properties.getProperty("default.outputFile"))               );
-
-    try{
-      format = NumberFormat.getInstance(new Locale(commandLine.getOptionValue("l", properties.getProperty("default.language"))));
-      dOptions.put("v", format.parse(              commandLine.getOptionValue("v", properties.getProperty("dafault.variation" ))).doubleValue());
-    } catch (java.text.ParseException e) {
-      e.getMessage();
-    }
+    lOptions.put("m", Long.parseLong(   commandLine.getOptionValue("m", properties.getProperty("default.minimum"   ))));
+    lOptions.put("M", Long.parseLong(   commandLine.getOptionValue("M", properties.getProperty("default.Maximum"   ))));
+    iOptions.put("s", Integer.parseInt( commandLine.getOptionValue("s", properties.getProperty("default.size"      ))));
+    sOptions.put("f",                   commandLine.getOptionValue("f", properties.getProperty("default.outputFile")) );
+    iOptions.put("v", Integer.parseInt( commandLine.getOptionValue("v", properties.getProperty("dafault.variation" ))));
 
   }
 

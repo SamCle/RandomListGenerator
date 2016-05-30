@@ -9,7 +9,7 @@ class OptionsHandler {
 
   public static final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
   protected Map<String,String>  sOptions;
-  protected Map<String,Integer> iOptions;
+  protected Map<String,Integer> iOptions; //TODO: min max sono long, var e size sono int
   protected Map<String,Double>  dOptions;
   NumberFormat format;
 

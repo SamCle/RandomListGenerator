@@ -9,7 +9,6 @@ public class UniformRandom {
 	long iMin;
 	long iMax;
 	int iSize;
-	long iPrevious;
 
 	public UniformRandom(long iMin, long iMax, int iSize) {
 		this.iMin = iMin;
@@ -24,23 +23,13 @@ public class UniformRandom {
 //		}
 	}
 
-	public void setIPrevious(long iPrevious){
-		this.iPrevious = iPrevious;
-	}
-
-	private boolean checkNext(long iNext) {
-		if (Math.abs(iNext - this.iPrevious) < 1)
+	public boolean checkNext(long iPrevious, long iNext) {
+		if (Math.abs(iNext - iPrevious) <= 1)
 			return false;
 		else
 			return true;
 	}
 
-/*	NOT NEEDED
-	public long uniformNext()	{
-		long iNext = 0; //dummy for now
-		return iNext;
-	}
-*/	
 	public double nextDouble() {
 		return secureRandom.nextDouble();
 	}

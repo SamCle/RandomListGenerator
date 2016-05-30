@@ -12,7 +12,7 @@ public class RandomListGenerator {
 		OptionsHandler opt = new OptionsHandler(args);
 		if(opt.lOptions.size() == 0) {
 			return; 	// opt.lOptions.size() is equal to zero iff the help option has been invoked.
-			// In this case, we close the main immediately.
+						// In this case, we close the main immediately.
 		}
 
 		long iMin = opt.lOptions.get("m");
@@ -27,17 +27,7 @@ public class RandomListGenerator {
 		separators = setSeparators(iMin, iMax, iSize, iVar, uniformRandom);
 		list = setList(iSize, separators, uniformRandom);
 
-		try(PrintWriter printout = new PrintWriter( new BufferedWriter( new FileWriter(outputFile, debugger) ) )){
-			// Dummy cycle to print to terminal; to be replaced with call to method which prints to file
-			for(int i = 0; i < iSize; i++) {
-				printout.printf("%05d%n", list.get(i));
-				// 		System.out.println(list.get(i));
-			}
-
-		} catch (IOException e){
-			e.getMessage();
-		}
-
+		printOutput(list, outputFile, debugger);
 	}
 
 	private static List<Long> setSeparators(long iMin, long iMax, int iSize, int iVar, UniformRandom uniformRandom) {
@@ -70,5 +60,15 @@ public class RandomListGenerator {
 			return list;
 		}
 
-		//	ADD STATIC METHOD TO PRINT TO FILE WITH NECESSARY STYLE
+	private static void printOutput(List<Long> list, File outputFile, boolean debugger) {
+		try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, debugger)))) {
+			for(int i = 0; i < list.size(); i++) {
+				printout.printf("%05d%n", list.get(i));
+			}
+
+		} catch (IOException e) {
+			e.getMessage();
+		}
+		
 	}
+}

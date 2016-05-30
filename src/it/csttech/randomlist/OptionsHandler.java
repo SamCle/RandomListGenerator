@@ -9,13 +9,14 @@ public class OptionsHandler {
 
   public static final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
   protected Map<String,String>  sOptions;
-  protected Map<String,Integer> iOptions; //TODO: min max sono long, var e size sono int
+  protected Map<String,Integer> iOptions;
   protected Map<String,Long>    lOptions;
 
   OptionsHandler(String[] args){
 
     this.sOptions = new HashMap<String,String>(0);
     this.iOptions = new HashMap<String,Integer>(0);
+    this.lOptions = new HashMap<String,Long>(0);
 
     Options options = new Options();
     DefaultParser parser = new DefaultParser();

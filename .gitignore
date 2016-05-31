@@ -4,7 +4,8 @@ lib/
 bin/
 log/
 comments/
-output.txt
+/output.txt
+/testOutput.txt
 gnuplotscript.sh
 .ant-targets-build.xml
 config/log4j2.xml

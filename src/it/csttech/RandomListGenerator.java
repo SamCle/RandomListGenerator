@@ -28,8 +28,9 @@ public class RandomListGenerator {
 		int  iVar = Integer.parseInt(commandLine.getOptionValue("v", properties.getProperty("dafault.variation" )));
 		int iSize = Integer.parseInt(commandLine.getOptionValue("s", properties.getProperty("default.size"      )));
 		File outputFile =   new File(commandLine.getOptionValue("f", properties.getProperty("default.outputFile")));
-		boolean appender =         ! commandLine.hasOption("r");
+		boolean appender =          commandLine.hasOption("a");
 		long lLength = Math.round(Math.ceil(Math.log10(iMax)));
+		
 		List<Long> list = new ArrayList<Long>(iSize);
 		List<Long> separators = new ArrayList<Long>();
 		UniformRandom uniformRandom = new UniformRandom(iMin, iMax, iSize);
@@ -69,10 +70,10 @@ public class RandomListGenerator {
 				list.add(i, point);
 				i++;
 			} else {}
-			}
-
-			return list;
 		}
+
+		return list;
+	}
 
 		private static void printOutput(List<Long> list, File outputFile, boolean appender, long lLength) {
 			try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, appender)))) {

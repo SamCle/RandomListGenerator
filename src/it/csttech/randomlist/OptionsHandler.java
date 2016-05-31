@@ -25,7 +25,7 @@ public class OptionsHandler {
     options.addOption(new Option("f", "file",       true,  "Output file name."                  ));
     options.addOption(new Option("p", "properties", true,  "Config file name."                  ));
     options.addOption(new Option("v", "variation",  true,  "Maximal change in boundaries."      ));
-    options.addOption(new Option("r", "rewrite",    false, "Flag, cancels output before writing"));
+    options.addOption(new Option("a", "append",    false, "Flag, appends new list to previous one."));
 
     try {
       commandLine = parser.parse(options, args);

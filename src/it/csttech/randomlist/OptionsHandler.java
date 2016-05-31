@@ -11,9 +11,11 @@ public class OptionsHandler {
   protected Map<String,String>  sOptions;
   protected Map<String,Integer> iOptions;
   protected Map<String,Long>    lOptions;
+  protected boolean helpCalled;
 
   OptionsHandler(String[] args){
 
+    this.helpCalled = false;
     this.sOptions = new HashMap<String,String>(0);
     this.iOptions = new HashMap<String,Integer>(0);
     this.lOptions = new HashMap<String,Long>(0);
@@ -33,11 +35,13 @@ public class OptionsHandler {
     try {
       commandLine = parser.parse(options, args);
     } catch (Exception e) {
+//      log.error("Option parser is not working");
       e.printStackTrace();
     }
     if (commandLine.hasOption("h")) {
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp("Converter", options);
+      helpCalled = true;
       return;
     }
 
@@ -57,6 +61,7 @@ public class OptionsHandler {
     try(InputStream input = new FileInputStream(propFile)) {
       prop.load(input);
     } catch (IOException e) {
+//      log.error("File not recognized.");
       e.printStackTrace();
     }
     return prop;

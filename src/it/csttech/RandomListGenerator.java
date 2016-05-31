@@ -8,7 +8,7 @@ import java.util.*;
 public class RandomListGenerator {
 	public static void main(String[] args) {
 
-		boolean debugger = true;
+		boolean appender = true;
 		OptionsHandler opt = new OptionsHandler(args);
 		if(opt.lOptions.size() == 0) {
 			return; 	// opt.lOptions.size() is equal to zero iff the help option has been invoked.
@@ -27,7 +27,8 @@ public class RandomListGenerator {
 		separators = setSeparators(iMin, iMax, iSize, iVar, uniformRandom);
 		list = setList(iSize, separators, uniformRandom);
 
-		printOutput(list, outputFile, debugger);
+		printOutput(list, outputFile, appender);
+		System.out.println("Done! Check output file");
 	}
 
 	private static List<Long> setSeparators(long iMin, long iMax, int iSize, int iVar, UniformRandom uniformRandom) {
@@ -55,13 +56,13 @@ public class RandomListGenerator {
 				list.add(i, point);
 				i++;
 			} else {}
-			}
-
-			return list;
 		}
 
-	private static void printOutput(List<Long> list, File outputFile, boolean debugger) {
-		try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, debugger)))) {
+		return list;
+	}
+
+	private static void printOutput(List<Long> list, File outputFile, boolean appender) {
+		try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, appender)))) {
 			for(int i = 0; i < list.size(); i++) {
 				printout.printf("%05d%n", list.get(i));
 			}

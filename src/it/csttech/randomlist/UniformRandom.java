@@ -2,6 +2,11 @@ package it.csttech.randomlist;
 
 import java.security.*;
 
+/** 
+*	Please note: You are advised to instantiate SecureRandom using the following:
+*	secureRandom = SecureRandom.getInstanceStrong();
+*/
+
 public class UniformRandom {
 
 	public SecureRandom secureRandom;
@@ -15,19 +20,10 @@ public class UniformRandom {
 		this.iMax = iMax;
 		this.iSize = iSize;
 		secureRandom = new SecureRandom();
-//		try{
-//		secureRandom = SecureRandom.getInstanceStrong();
-//		} catch (NoSuchAlgorithmException e)
-//		{
-//			e.getMessage();
-//		}
 	}
 
 	public boolean checkNext(long iPrevious, long iNext) {
-		if (Math.abs(iNext - iPrevious) <= 1)
-			return false;
-		else
-			return true;
+		return !(Math.abs(iNext - iPrevious) <= 1);
 	}
 
 	public double nextDouble() {

@@ -4,66 +4,54 @@ import java.io.*;
 import java.util.*;
 import java.text.*;
 import org.apache.commons.cli.*;
+import org.apache.logging.log4j.*;
 
 public class OptionsHandler {
 
-  public static final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
-  protected Map<String,String>  sOptions;
-  protected Map<String,Integer> iOptions;
-  protected Map<String,Long>    lOptions;
+  public CommandLine commandLine;
   protected boolean helpCalled;
 
   OptionsHandler(String[] args){
 
+    Logger log = LogManager.getLogger();
     this.helpCalled = false;
-    this.sOptions = new HashMap<String,String>(0);
-    this.iOptions = new HashMap<String,Integer>(0);
-    this.lOptions = new HashMap<String,Long>(0);
 
     Options options = new Options();
     DefaultParser parser = new DefaultParser();
-    options.addOption(new Option("h", "help",       false, "Shows help."                  ));
-    options.addOption(new Option("m", "minimum",    true,  "Lower bound for the result."  ));
-    options.addOption(new Option("M", "Maximum",    true,  "Upper bound for the result."  ));
-    options.addOption(new Option("s", "size",       true,  "Size of the result."          ));
-    options.addOption(new Option("f", "file",       true,  "Output file name."            ));
-    options.addOption(new Option("p", "properties", true,  "Config file name."            ));
-    options.addOption(new Option("v", "variation",  true,  "Maximal change in boundaries."));
-
-    CommandLine commandLine = null;
+    options.addOption(new Option("h", "help",       false, "Shows help."                        ));
+    options.addOption(new Option("m", "minimum",    true,  "Lower bound for the result."        ));
+    options.addOption(new Option("M", "Maximum",    true,  "Upper bound for the result."        ));
+    options.addOption(new Option("s", "size",       true,  "Size of the result."                ));
+    options.addOption(new Option("f", "file",       true,  "Output file name."                  ));
+    options.addOption(new Option("p", "properties", true,  "Config file name."                  ));
+    options.addOption(new Option("v", "variation",  true,  "Maximal change in boundaries."      ));
+    options.addOption(new Option("r", "rewrite",    false, "Flag, cancels output before writing"));
 
     try {
       commandLine = parser.parse(options, args);
     } catch (Exception e) {
-//      log.error("Option parser is not working");
+      log.error("Option parser is not working");
       e.printStackTrace();
     }
     if (commandLine.hasOption("h")) {
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp("Converter", options);
       helpCalled = true;
-      return;
+      log.trace("Options have been read.");
     }
-
-    String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
-    Properties properties = readProperties(propFile);
-
-    lOptions.put("m", Long.parseLong(   commandLine.getOptionValue("m", properties.getProperty("default.minimum"   ))));
-    lOptions.put("M", Long.parseLong(   commandLine.getOptionValue("M", properties.getProperty("default.Maximum"   ))));
-    iOptions.put("s", Integer.parseInt( commandLine.getOptionValue("s", properties.getProperty("default.size"      ))));
-    sOptions.put("f",                   commandLine.getOptionValue("f", properties.getProperty("default.outputFile")) );
-    iOptions.put("v", Integer.parseInt( commandLine.getOptionValue("v", properties.getProperty("dafault.variation" ))));
 
   }
 
   protected static Properties readProperties( String propFile ){
+    Logger log = LogManager.getLogger();
     Properties prop = new Properties();
     try(InputStream input = new FileInputStream(propFile)) {
       prop.load(input);
     } catch (IOException e) {
-//      log.error("File not recognized.");
+      log.error("File not recognized.");
       e.printStackTrace();
     }
+    log.trace("Properties have been read.");
     return prop;
   }
 

@@ -4,22 +4,32 @@ import it.csttech.randomlist.*;
 import java.io.*;
 import java.security.*;
 import java.util.*;
+import org.apache.commons.cli.*;
+import org.apache.logging.log4j.*;
 
 public class RandomListGenerator {
 	public static void main(String[] args) {
 
-		boolean appender = true;
+		final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
+		Logger log = LogManager.getLogger();
+
 		OptionsHandler opt = new OptionsHandler(args);
-		if(opt.lOptions.size() == 0) {
-			return; 	// opt.lOptions.size() is equal to zero iff the help option has been invoked.
-						// In this case, we close the main immediately.
+		CommandLine commandLine = opt.commandLine;
+
+		String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
+		Properties properties = OptionsHandler.readProperties(propFile);
+
+		if(opt.helpCalled) {
+			return;
 		}
 
-		long iMin = opt.lOptions.get("m");
-		long iMax = opt.lOptions.get("M");
-		int iVar = opt.iOptions.get("v");
-		int iSize = opt.iOptions.get("s");
-		File outputFile = new File(opt.sOptions.get("f"));
+		long iMin =   Long.parseLong(commandLine.getOptionValue("m", properties.getProperty("default.minimum"   )));
+		long iMax =   Long.parseLong(commandLine.getOptionValue("M", properties.getProperty("default.Maximum"   )));
+		int  iVar = Integer.parseInt(commandLine.getOptionValue("v", properties.getProperty("dafault.variation" )));
+		int iSize = Integer.parseInt(commandLine.getOptionValue("s", properties.getProperty("default.size"      )));
+		File outputFile =   new File(commandLine.getOptionValue("f", properties.getProperty("default.outputFile")));
+		boolean appender =         ! commandLine.hasOption("r");
+		long lLength = Math.round(Math.ceil(Math.log10(iMax)));
 		List<Long> list = new ArrayList<Long>(iSize);
 		List<Long> separators = new ArrayList<Long>();
 		UniformRandom uniformRandom = new UniformRandom(iMin, iMax, iSize);
@@ -27,8 +37,11 @@ public class RandomListGenerator {
 		separators = setSeparators(iMin, iMax, iSize, iVar, uniformRandom);
 		list = setList(iSize, separators, uniformRandom);
 
-		printOutput(list, outputFile, appender);
+		printOutput(list, outputFile, appender, lLength);
 		System.out.println("Done! Check output file");
+
+		log.trace("Done! Check output file.");
+		log.trace("");
 	}
 
 	private static List<Long> setSeparators(long iMin, long iMax, int iSize, int iVar, UniformRandom uniformRandom) {
@@ -56,20 +69,20 @@ public class RandomListGenerator {
 				list.add(i, point);
 				i++;
 			} else {}
-		}
-
-		return list;
-	}
-
-	private static void printOutput(List<Long> list, File outputFile, boolean appender) {
-		try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, appender)))) {
-			for(int i = 0; i < list.size(); i++) {
-				printout.printf("%05d%n", list.get(i));
 			}
 
-		} catch (IOException e) {
-			e.getMessage();
+			return list;
 		}
-		
+
+		private static void printOutput(List<Long> list, File outputFile, boolean appender, long lLength) {
+			try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, appender)))) {
+				for(int i = 0; i < list.size(); i++) {
+					printout.printf("%0"+lLength+"d%n", list.get(i));
+				}
+
+			} catch (IOException e) {
+				e.getMessage();
+			}
+
+		}
 	}
-}

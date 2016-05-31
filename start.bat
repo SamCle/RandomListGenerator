@@ -10,8 +10,7 @@
 	echo --------------------------------------------------------------
 	echo.
 
-
-	java -Dlog4j.configurationFile=%LOG_CONFIG% -cp %CLASS_PATH% %MAIN_CLASS_FILE% %*
+java -Dlog4j.configurationFile=%LOG_CONFIG% -cp %CLASS_PATH% %MAIN_CLASS_FILE% %*
 
 	echo.
 	echo --------------------------------------------------------------

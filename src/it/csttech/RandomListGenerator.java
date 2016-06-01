@@ -15,6 +15,9 @@ import org.apache.logging.log4j.*;
 */
 public class RandomListGenerator {
 
+
+	static Logger log = LogManager.getLogger(RandomListGenerator.class.getName());
+	
 	/**
 	* Main method.
 	* @param args Possible options.
@@ -22,7 +25,6 @@ public class RandomListGenerator {
 	public static void main(String[] args) {
 
 		final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
-		Logger log = LogManager.getLogger();
 
 		OptionsHandler opt = new OptionsHandler(args);
 		CommandLine commandLine = opt.commandLine;
@@ -79,20 +81,20 @@ public class RandomListGenerator {
 				list.add(i, point);
 				i++;
 			} else {}
-			}
-
-			return list;
 		}
 
-		private static void printOutput(List<Long> list, File outputFile, boolean appender, long lLength) {
-			try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, appender)))) {
-				for(int i = 0; i < list.size(); i++) {
-					printout.printf("%0"+lLength+"d%n", list.get(i));
-				}
-
-			} catch (IOException e) {
-				e.getMessage();
-			}
-
-		}
+		return list;
 	}
+
+	private static void printOutput(List<Long> list, File outputFile, boolean appender, long lLength) {
+		try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, appender)))) {
+			for(int i = 0; i < list.size(); i++) {
+				printout.printf("%0"+lLength+"d%n", list.get(i));
+			}
+
+		} catch (IOException e) {
+				e.getMessage();
+		}
+
+	}
+}

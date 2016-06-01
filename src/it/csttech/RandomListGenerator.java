@@ -39,10 +39,8 @@ public class RandomListGenerator {
 		list = setList(iSize, separators, uniformRandom);
 
 		printOutput(list, outputFile, appender, lLength);
-		System.out.println("Done! Check output file");
 
-		log.trace("Done! Check output file.");
-		log.trace("");
+		log.trace("Done! Check output file.\n"); //Exit message
 	}
 
 	private static List<Long> setSeparators(long iMin, long iMax, int iSize, int iVar, UniformRandom uniformRandom) {

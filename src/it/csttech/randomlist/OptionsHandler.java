@@ -11,15 +11,8 @@ import org.apache.logging.log4j.*;
 */
 public class OptionsHandler {
 
-  /**
-  * Contains all the option needed to make RandomListGenerator run.
-  */
-  private CommandLine commandLine;
-
-  /**
-  * States whether "help" has been called or not.
-  */
-  private boolean helpCalled;
+  public CommandLine commandLine; //TODO: queste due devono diventare private
+  public boolean helpCalled;
 
   /**
   * Needs all the String arguments of the main to be able to recognize all the options set.
@@ -38,7 +31,7 @@ public class OptionsHandler {
     options.addOption(new Option("f", "file",       true,  "Output file name."                  ));
     options.addOption(new Option("p", "properties", true,  "Config file name."                  ));
     options.addOption(new Option("v", "variation",  true,  "Maximal change in boundaries."      ));
-    options.addOption(new Option("a", "append",    false, "Flag, appends new list to previous one."));
+    options.addOption(new Option("a", "append",     false, "Flag, appends new list to previous one."));
 
     try {
       commandLine = parser.parse(options, args);
@@ -72,6 +65,9 @@ public class OptionsHandler {
     return prop;
   }
 
+  /**
+  * Contains all the option needed to make RandomListGenerator run.
+  */
   public CommandLine getCommandLine(){
     return commandLine;
   }

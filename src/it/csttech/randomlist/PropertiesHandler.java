@@ -20,10 +20,6 @@ public class PropertiesHandler {
     String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
     Properties properties = OptionsHandler.readProperties(propFile);
 
-    if(opt.helpCalled) {
-      return;
-    }
-
     iMin =    Long.parseLong(commandLine.getOptionValue("m", properties.getProperty("default.minimum"   )));
     iMax =    Long.parseLong(commandLine.getOptionValue("M", properties.getProperty("default.Maximum"   )));
     iVar =  Integer.parseInt(commandLine.getOptionValue("v", properties.getProperty("dafault.variation" )));

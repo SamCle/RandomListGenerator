@@ -15,6 +15,9 @@ import org.apache.logging.log4j.*;
 */
 public class RandomListGenerator {
 
+
+	static Logger log = LogManager.getLogger(RandomListGenerator.class.getName());
+	
 	/**
 	* Main method.
 	* @param args Possible options.
@@ -22,7 +25,6 @@ public class RandomListGenerator {
 	public static void main(String[] args) {
 
 		final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
-		Logger log = LogManager.getLogger();
 
 		OptionsHandler opt = new OptionsHandler(args);
 		CommandLine commandLine = opt.commandLine;
@@ -78,7 +80,7 @@ public class RandomListGenerator {
 			if(uniformRandom.checkNext( (i == 0? -2 : list.get(i-1)), point)) {
 				list.add(i, point);
 				i++;
-			} else { }
+			} else {}
 		}
 
 		return list;
@@ -91,7 +93,7 @@ public class RandomListGenerator {
 			}
 
 		} catch (IOException e) {
-			e.getMessage();
+				e.getMessage();
 		}
 
 	}

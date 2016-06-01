@@ -34,31 +34,31 @@ public class PropertiesHandler {
 
   }
 
-  public long getMin{
+  public long getMin(){
     return iMin;
   }
 
-  public long getMax{
+  public long getMax(){
     return iMax;
   }
 
-  public int getVar{
+  public int getVar(){
     return iVar;
   }
 
-  public int getSize{
+  public int getSize(){
     return iSize;
   }
 
-  public File getOutputFile{
+  public File getOutputFile(){
     return outputFile;
   }
 
-  public boolean isAppender{
+  public boolean isAppender(){
     return appender;
   }
 
-  public long getLength{
+  public long getLength(){
     return lLength;
   }
 

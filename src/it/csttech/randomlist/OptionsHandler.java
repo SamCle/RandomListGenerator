@@ -14,12 +14,12 @@ public class OptionsHandler {
   /**
   * Contains all the option needed to make RandomListGenerator run.
   */
-  public CommandLine commandLine;
+  private CommandLine commandLine;
 
   /**
   * States whether "help" has been called or not.
   */
-  protected boolean helpCalled;
+  private boolean helpCalled;
 
   /**
   * Needs all the String arguments of the main to be able to recognize all the options set.
@@ -70,6 +70,17 @@ public class OptionsHandler {
     }
     log.trace("Properties have been read.");
     return prop;
+  }
+
+  public CommandLine getCommandLine(){
+    return commandLine;
+  }
+
+  /**
+  * States whether "help" has been called or not.
+  */
+  private boolean isHelpCalled(){
+    return helpCalled;
   }
 
 }

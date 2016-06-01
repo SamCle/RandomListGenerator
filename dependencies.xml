@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-    <info organisation="it.csttech" module="formattingtools"/>
+    <info organisation="it.csttech" module="randomlistgenerator"/>
     <dependencies>
         <!-- CLI -->
         <dependency org="commons-cli" name="commons-cli" rev="1.3" transitive="false" />

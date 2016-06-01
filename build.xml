@@ -1,9 +1,9 @@
-<project name="FormattingTools" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" default="help">
+<project name="RandomListGenerator" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" default="help">
 	<description>
 		Command line tools to perform several format transformations.
 	</description>
 
-    <property name="main-class"  value="it.csttech.formattingtools.UseETL"/>
+    <property name="main-class"  value="it.csttech.RandomListGenerator"/>
 
     <property name="src.dir"     value="${basedir}/src"/>
     <property name="build.dir"   value="${basedir}/bin"/>

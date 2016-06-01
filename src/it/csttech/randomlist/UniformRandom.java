@@ -3,8 +3,6 @@ package it.csttech.randomlist;
 import java.security.*;
 
 /*
-*	Please note: You are advised to instantiate SecureRandom using the following:
-*	secureRandom = SecureRandom.getInstanceStrong();
 */
 
 /**
@@ -25,7 +23,9 @@ public class UniformRandom {
 	* Constructor that sets all the variables needed.
 	* @param iMin Lower bound of the range.
 	* @param iMax Upper bound of the range.
-	* @param iSize Size of the list that is going to be created.
+	* @param iSize Size of the list that is going to be created. <br>
+	*	Please note: You are advised to instantiate SecureRandom using the following:
+	*	secureRandom = SecureRandom.getInstanceStrong();
 	*/
 	public UniformRandom(long iMin, long iMax, int iSize) {
 		this.iMin = iMin;

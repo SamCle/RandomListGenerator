@@ -7,7 +7,18 @@ import java.util.*;
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.*;
 
+/**
+* This class generates a list of integers contained in a given range.<br>
+* No consecutive numbers can be generated.<br>
+* See .properties file for default values.<br>
+* Launch it together with the -h option to see the possible options available.
+*/
 public class RandomListGenerator {
+
+	/**
+	* Main method.
+	* @param args Possible options.
+	*/
 	public static void main(String[] args) {
 
 		final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
@@ -68,10 +79,10 @@ public class RandomListGenerator {
 				list.add(i, point);
 				i++;
 			} else {}
-		}
+			}
 
-		return list;
-	}
+			return list;
+		}
 
 		private static void printOutput(List<Long> list, File outputFile, boolean appender, long lLength) {
 			try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, appender)))) {

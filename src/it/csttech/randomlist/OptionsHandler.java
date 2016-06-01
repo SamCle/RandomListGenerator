@@ -6,11 +6,24 @@ import java.text.*;
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.*;
 
+/**
+*  This class can be used to handle option within the package randomlist.
+*/
 public class OptionsHandler {
 
+  /**
+  * Contains all the option needed to make RandomListGenerator run.
+  */
   public CommandLine commandLine;
+
+  /**
+  * States whether "help" has been called or not.
+  */
   protected boolean helpCalled;
 
+  /**
+  * Needs all the String arguments of the main to be able to recognize all the options set.
+  */
   OptionsHandler(String[] args){
 
     Logger log = LogManager.getLogger();
@@ -35,12 +48,17 @@ public class OptionsHandler {
     }
     if (commandLine.hasOption("h")) {
       HelpFormatter formatter = new HelpFormatter();
-      formatter.printHelp("Converter", options);
+      formatter.printHelp("RandomListGenerator [options]. Where the possible options are:", options);
       helpCalled = true;
     }
     log.trace("Options have been read.");
   }
 
+  /**
+  * A simple method to read properties from a .properties file.
+  * @param  propFile The path where the .properties file can be found.
+  * @return          The class Properties that stores properties.
+  */
   protected static Properties readProperties( String propFile ){
     Logger log = LogManager.getLogger();
     Properties prop = new Properties();

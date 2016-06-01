@@ -37,9 +37,8 @@ public class OptionsHandler {
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp("Converter", options);
       helpCalled = true;
-      log.trace("Options have been read.");
     }
-
+    log.trace("Options have been read.");
   }
 
   protected static Properties readProperties( String propFile ){

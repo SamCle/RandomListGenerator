@@ -64,7 +64,6 @@
 			</manifest>
 			<fileset dir="${classes.dir}" includes="**/*.class"/>
 			<fileset dir="${basedir}" includes="config/*.*"/>
-			<fileset dir="${cfg.dir}" includes="**/*.xml"/>
 			<zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
 		</jar>
 	</target>

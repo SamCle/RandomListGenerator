@@ -7,7 +7,6 @@ import org.apache.commons.cli.*;
 import org.apache.logging.log4j.*;
 
 public class PropertiesHandler {
-  final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
   private long iMin;
   private long iMax;
   private  int iVar;

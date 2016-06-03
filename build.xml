@@ -3,27 +3,28 @@
 		Command line tools to perform several format transformations.
 	</description>
 
-    <property name="main-class"  value="it.csttech.RandomListGenerator"/>
+	<property name="main-class"  value="it.csttech.RandomListGenerator"/>
 
-    <property name="src.dir"     value="${basedir}/src"/>
-    <property name="build.dir"   value="${basedir}/bin"/>
-    <property name="doc.dir"     value="${basedir}/docs"/>
-    <property name="lib.dir"     value="${basedir}/lib"/>
-    <property name="classes.dir" value="${build.dir}"/>
-    <property name="jar.dir"     value="${build.dir}/publish"/>
-    <property name="cfg.dir"	 value="${basedir}/config"/>
-    <property name="ivy.dep.file" value="${basedir}/dependencies.xml" />
+	<property name="src.dir"     value="${basedir}/src"/>
+	<property name="build.dir"   value="${basedir}/bin"/>
+	<property name="doc.dir"     value="${basedir}/docs"/>
+	<property name="lib.dir"     value="${basedir}/lib"/>
+	<property name="classes.dir" value="${build.dir}"/>
+	<property name="jar.dir"     value="${build.dir}/publish"/>
+	<property name="cfg.dir"	 value="${basedir}/config"/>
+	<property name="ivy.dep.file" value="${basedir}/dependencies.xml" />
+
 	<property file="build.properties" />
 
 	<!-- Define the ClassPath -->
-    <path id="classpath">
+	<path id="classpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar" />
 		</fileset>
 		<fileset dir="${jar.dir}">
 			<include name="*.jar" />
 		</fileset>
-    </path>
+	</path>
 
 
 	<target name="clean" description="Tidy up the workspace">
@@ -35,25 +36,38 @@
 	</target>
 
 	<target name="init" depends="clean" description="Setup project directories">
-        <mkdir dir="${classes.dir}"/>
-        <mkdir dir="${jar.dir}" />
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${jar.dir}" />
 		<mkdir dir="${doc.dir}"/>
 	</target>
 
-    <target name="compile" depends="init, ivy-retrieve" description="Compile java sources" >
-        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath">
-					<compilerarg value="-Xlint:all"/>
-				</javac>
-    </target>
+	<target name="compile" depends="init, ivy-retrieve" description="Compile java sources" >
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath">
+			<compilerarg value="-Xlint:all"/>
+		</javac>
+	</target>
 
-    <target name="jar" depends="compile" description="Create .jar file of the project">
-        <mkdir dir="${jar.dir}"/>
-        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="${main-class}"/>
-            </manifest>
-        </jar>
-    </target>
+	<target name="jar" depends="compile" description="Create .jar file of the project">
+			<mkdir dir="${jar.dir}"/>
+			<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+					<manifest>
+							<attribute name="Main-Class" value="${main-class}"/>
+					</manifest>
+			</jar>
+	</target>
+
+	<target name="jarbig" depends="compile" description="Create .jar file of the project">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar"><!-- basedir="${classes.dir}"-->
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+			<fileset dir="${classes.dir}" includes="**/*.class"/>
+			<fileset dir="${basedir}" includes="config/*.*"/>
+			<fileset dir="${cfg.dir}" includes="**/*.xml"/>
+			<zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
+		</jar>
+	</target>
 
 	<target name="help">
 		<java classname="org.apache.tools.ant.Main" description="Print ant guide" >
@@ -62,9 +76,9 @@
 	</target>
 
 
-    <target name="doc" description="Generate documentation JavaDoc" >
- 		<delete failonerror="false" dir="${doc.dir}"/>
-        <javadoc sourcepath="${src.dir}" destdir="${doc.dir}">
+	<target name="doc" description="Generate documentation JavaDoc" >
+		<delete failonerror="false" dir="${doc.dir}"/>
+		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}">
 			<bottom><![CDATA[<i>Copyright &#169; 2016 Dummy Corp. All Rights Reserved.</i>]]></bottom>
 			<!-- Custom tags -->
 			<tag name="todo." scope="all" description="To do:"/>
@@ -73,8 +87,8 @@
 					<include name="*.jar"/>
 				</fileset>
 			</classpath>
-	    </javadoc>
-    </target>
+		</javadoc>
+	</target>
 
 	<!-- IVY TARGETS -->
 	<target name="ivy-report">
@@ -110,7 +124,7 @@
 	</target>
 
 
-   <!--CONFIGURAZIONE DI IVY PER LE DIPENDENZE -->
+	<!--CONFIGURAZIONE DI IVY PER LE DIPENDENZE -->
 
 
 

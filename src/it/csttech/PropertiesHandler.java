@@ -16,12 +16,13 @@ public class PropertiesHandler {
   private boolean appender;
   private long lLength;
 
-  public PropertiesHandler(CommandLine commandLine){
-    String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
-    Properties properties = OptionsHandler.readProperties(propFile);
+  public PropertiesHandler(CommandLine commandLine, String defaultProperties){
+    Logger log = LogManager.getLogger();
+    String propFile = commandLine.getOptionValue("p", defaultProperties);
+    Properties properties = readProperties(propFile);
 
     iMin =    Long.parseLong(commandLine.getOptionValue("m", properties.getProperty("default.minimum"   )));
-    iMax =    Long.parseLong(commandLine.getOptionValue("M", properties.getProperty("default.Maximum"   )));
+    iMax =    Long.parseLong(commandLine.getOptionValue("M", properties.getProperty("default.maximum"   )));
     iVar =  Integer.parseInt(commandLine.getOptionValue("v", properties.getProperty("dafault.variation" )));
     iSize = Integer.parseInt(commandLine.getOptionValue("s", properties.getProperty("default.size"      )));
     outputFile =    new File(commandLine.getOptionValue("f", properties.getProperty("default.outputFile")));
@@ -29,6 +30,19 @@ public class PropertiesHandler {
     lLength = Math.round(Math.ceil(Math.log10(iMax)));
 
   }
+
+    private static Properties readProperties( String propFile ){
+      Logger log = LogManager.getLogger();
+      Properties prop = new Properties();
+      try(InputStream input = new FileInputStream(propFile)) {
+        prop.load(input);
+      } catch (IOException e) {
+        log.error("File not recognized.");
+        e.printStackTrace();
+      }
+      log.trace("Properties have been read.");
+      return prop;
+    }
 
   public long getMin(){
     return iMin;

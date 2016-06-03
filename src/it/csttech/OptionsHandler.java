@@ -11,8 +11,8 @@ import org.apache.logging.log4j.*;
 */
 public class OptionsHandler {
 
-  public CommandLine commandLine; //TODO: queste due devono diventare private
-  public boolean helpCalled;
+  private CommandLine commandLine;
+  private boolean helpCalled;
 
   /**
   * Needs all the String arguments of the main to be able to recognize all the options set.
@@ -48,24 +48,6 @@ public class OptionsHandler {
   }
 
   /**
-  * A simple method to read properties from a .properties file.
-  * @param  propFile The path where the .properties file can be found.
-  * @return          The class Properties that stores properties.
-  */
-  protected static Properties readProperties( String propFile ){
-    Logger log = LogManager.getLogger();
-    Properties prop = new Properties();
-    try(InputStream input = new FileInputStream(propFile)) {
-      prop.load(input);
-    } catch (IOException e) {
-      log.error("File not recognized.");
-      e.printStackTrace();
-    }
-    log.trace("Properties have been read.");
-    return prop;
-  }
-
-  /**
   * Contains all the option needed to make RandomListGenerator run.
   */
   public CommandLine getCommandLine(){
@@ -75,7 +57,7 @@ public class OptionsHandler {
   /**
   * States whether "help" has been called or not.
   */
-  private boolean isHelpCalled(){
+  public boolean isHelpCalled(){
     return helpCalled;
   }
 

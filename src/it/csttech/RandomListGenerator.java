@@ -15,75 +15,46 @@ import org.apache.logging.log4j.*;
 */
 public class RandomListGenerator {
 
+	private static Logger log;
+	private static long iMin;
+	private static long iMax;
+	private static int iVar;
+	private static int iSize;
+	private static final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
+	private static boolean appender;
+	private static long lLength;
+	private static File outputFile;
 
-	static Logger log = LogManager.getLogger(RandomListGenerator.class.getName());
-	
 	/**
 	* Main method.
 	* @param args Possible options.
 	*/
 	public static void main(String[] args) {
 
-		final String DEFAULT_PROPERTIES = "config/RandomListGenerator.properties";
-
+		log = LogManager.getLogger(RandomListGenerator.class.getName());
 		OptionsHandler opt = new OptionsHandler(args);
-		CommandLine commandLine = opt.commandLine;
-
+		CommandLine commandLine = opt.getCommandLine();
 		String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
-		Properties properties = OptionsHandler.readProperties(propFile);
+		PropertiesHandler propertiesHandler = new PropertiesHandler(commandLine, propFile);
 
-		if(opt.helpCalled) {
+		if(opt.isHelpCalled()) {
 			return;
 		}
 
-		long iMin =   Long.parseLong(commandLine.getOptionValue("m", properties.getProperty("default.minimum"   )));
-		long iMax =   Long.parseLong(commandLine.getOptionValue("M", properties.getProperty("default.Maximum"   )));
-		int  iVar = Integer.parseInt(commandLine.getOptionValue("v", properties.getProperty("dafault.variation" )));
-		int iSize = Integer.parseInt(commandLine.getOptionValue("s", properties.getProperty("default.size"      )));
-		File outputFile =   new File(commandLine.getOptionValue("f", properties.getProperty("default.outputFile")));
-		boolean appender =           commandLine.hasOption("a");
-		long lLength = Math.round(Math.ceil(Math.log10(iMax)));
+		iMin  = propertiesHandler.getMin();
+		iMax  = propertiesHandler.getMax();
+		iVar  = propertiesHandler.getVar();
+		iSize = propertiesHandler.getSize();
+		outputFile = propertiesHandler.getOutputFile();
+		appender = propertiesHandler.isAppender();
+		lLength = Math.round(Math.ceil(Math.log10(iMax)));
 
+		RandomListBuilder randomListBuilder = new RandomListBuilder(iMin, iMax, iVar, iSize);
 		List<Long> list = new ArrayList<Long>(iSize);
-		List<Long> separators = new ArrayList<Long>();
-		UniformRandom uniformRandom = new UniformRandom(iMin, iMax, iSize);
-
-		separators = setSeparators(iMin, iMax, iSize, iVar, uniformRandom);
-		list = setList(iSize, separators, uniformRandom);
-
+		list = randomListBuilder.getList();
 		printOutput(list, outputFile, appender, lLength);
-
 		log.trace("Done! Check output file.\n"); //Exit message
-	}
 
-	private static List<Long> setSeparators(long iMin, long iMax, int iSize, int iVar, UniformRandom uniformRandom) {
-		List<Long> separators = new ArrayList<Long>();
-		long separator;
-
-		separators.add(0, iMin);
-		for(int i = 1; i < iSize; i++) {
-			separator =  (i) * (iMax - iMin) / iSize + iMin;
-			separator += Math.floor(2 * (uniformRandom.nextDouble() - 0.5) * ((iMax - iMin) / iSize) * iVar / 100);
-			separators.add(i, separator);
-		}
-		separators.add(iSize, iMax);
-
-		return separators;
-	}
-
-	private static List<Long> setList(int iSize, List<Long> separators, UniformRandom uniformRandom) {
-		List<Long> list = new ArrayList<Long>(iSize);
-		long point;
-
-		for(int i = 0; i < iSize; ) {
-			point = (long) Math.floor(uniformRandom.nextDouble() * (separators.get(i+1) - separators.get(i)) + separators.get(i));
-			if(uniformRandom.checkNext( (i == 0? -2 : list.get(i-1)), point)) {
-				list.add(i, point);
-				i++;
-			} else {}
-		}
-
-		return list;
 	}
 
 	private static void printOutput(List<Long> list, File outputFile, boolean appender, long lLength) {
@@ -93,8 +64,9 @@ public class RandomListGenerator {
 			}
 
 		} catch (IOException e) {
-				e.getMessage();
+			e.getMessage();
 		}
 
 	}
+
 }

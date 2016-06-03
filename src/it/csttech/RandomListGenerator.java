@@ -24,22 +24,14 @@ public class RandomListGenerator {
 	private static boolean appender;
 	private static long lLength;
 	private static File outputFile;
+	private static OptionsHandler opt;
 
-	/**
-	* Main method.
-	* @param args Possible options.
-	*/
-	public static void main(String[] args) {
-
+	private RandomListGenerator(String[] args){
 		log = LogManager.getLogger(RandomListGenerator.class.getName());
-		OptionsHandler opt = new OptionsHandler(args);
+		opt = new OptionsHandler(args);
 		CommandLine commandLine = opt.getCommandLine();
 		String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
 		PropertiesHandler propertiesHandler = new PropertiesHandler(commandLine, propFile);
-
-		if(opt.isHelpCalled()) {
-			return;
-		}
 
 		iMin  = propertiesHandler.getMin();
 		iMax  = propertiesHandler.getMax();
@@ -48,10 +40,23 @@ public class RandomListGenerator {
 		outputFile = propertiesHandler.getOutputFile();
 		appender = propertiesHandler.isAppender();
 		lLength = Math.round(Math.ceil(Math.log10(iMax)));
+	}
+
+
+	/**
+	* Main method.
+	* @param args Possible options.
+	*/
+	public static void main(String[] args) {
+
+		RandomListGenerator randomListGenerator = new RandomListGenerator(args);
+		if(opt.isHelpCalled()) {
+			return;
+		}
 
 		RandomListBuilder randomListBuilder = new RandomListBuilder(iMin, iMax, iVar, iSize);
-		List<Long> list = new ArrayList<Long>(iSize);
-		list = randomListBuilder.getList();
+//		 list = new ArrayList<Long>(iSize);
+		List<Long> list = randomListBuilder.getList();
 		printOutput(list, outputFile, appender, lLength);
 		log.trace("Done! Check output file.\n"); //Exit message
 

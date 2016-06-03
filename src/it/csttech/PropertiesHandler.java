@@ -30,7 +30,7 @@ public class PropertiesHandler {
 
   }
 
-    private static Properties readProperties( String propFile ){
+    private Properties readProperties( String propFile ){
       Logger log = LogManager.getLogger();
       Properties prop = new Properties();
       try(InputStream input = new FileInputStream(propFile)) {

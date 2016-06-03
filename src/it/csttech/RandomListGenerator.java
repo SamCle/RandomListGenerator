@@ -15,7 +15,7 @@ import org.apache.logging.log4j.*;
 */
 public class RandomListGenerator {
 
-	private static Logger log;
+	private static final Logger log = LogManager.getLogger(RandomListGenerator.class.getName());
 	private static long iMin;
 	private static long iMax;
 	private static int iVar;
@@ -26,13 +26,7 @@ public class RandomListGenerator {
 	private static File outputFile;
 	private static OptionsHandler opt;
 
-	private RandomListGenerator(String[] args){
-		log = LogManager.getLogger(RandomListGenerator.class.getName());
-		opt = new OptionsHandler(args);
-		CommandLine commandLine = opt.getCommandLine();
-		String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
-		PropertiesHandler propertiesHandler = new PropertiesHandler(commandLine, propFile);
-
+	public RandomListGenerator(PropertiesHandler propertiesHandler){
 		iMin  = propertiesHandler.getMin();
 		iMax  = propertiesHandler.getMax();
 		iVar  = propertiesHandler.getVar();
@@ -40,8 +34,11 @@ public class RandomListGenerator {
 		outputFile = propertiesHandler.getOutputFile();
 		appender = propertiesHandler.isAppender();
 		lLength = Math.round(Math.ceil(Math.log10(iMax)));
-	}
 
+		RandomListBuilder randomListBuilder = new RandomListBuilder(iMin, iMax, iVar, iSize);
+		List<Long> list = randomListBuilder.getList();
+		printOutput(list, outputFile, appender, lLength);
+	}
 
 	/**
 	* Main method.
@@ -49,15 +46,17 @@ public class RandomListGenerator {
 	*/
 	public static void main(String[] args) {
 
-		RandomListGenerator randomListGenerator = new RandomListGenerator(args);
+		opt = new OptionsHandler(args);
+		CommandLine commandLine = opt.getCommandLine();
+		String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
+		PropertiesHandler propertiesHandler = new PropertiesHandler(commandLine, propFile);
+
 		if(opt.isHelpCalled()) {
 			return;
 		}
 
-		RandomListBuilder randomListBuilder = new RandomListBuilder(iMin, iMax, iVar, iSize);
-//		 list = new ArrayList<Long>(iSize);
-		List<Long> list = randomListBuilder.getList();
-		printOutput(list, outputFile, appender, lLength);
+		RandomListGenerator randomListGenerator = new RandomListGenerator(propertiesHandler);
+
 		log.trace("Done! Check output file.\n"); //Exit message
 
 	}

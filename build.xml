@@ -63,7 +63,6 @@
 				<attribute name="Main-Class" value="${main-class}"/>
 			</manifest>
 			<fileset dir="${classes.dir}" includes="**/*.class"/>
-			<fileset dir="${basedir}" includes="config/*.*"/>
 			<zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
 		</jar>
 	</target>
@@ -121,13 +120,5 @@
 	<target name="ivy-cleancache">
 		<ivy:cleancache />
 	</target>
-
-
-	<!--CONFIGURAZIONE DI IVY PER LE DIPENDENZE -->
-
-
-
-
-
 
 </project>

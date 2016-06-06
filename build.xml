@@ -14,7 +14,7 @@
 	<property name="cfg.dir"	 value="${basedir}/config"/>
 	<property name="ivy.dep.file" value="${basedir}/dependencies.xml" />
 
-	<property file="build.properties" />
+	<!--	<property file="build.properties" />	-->
 
 	<!-- Define the ClassPath -->
 	<path id="classpath">

@@ -5,14 +5,18 @@
 
 	<property name="main-class"  value="it.csttech.RandomListGenerator"/>
 
-	<property name="src.dir"     value="${basedir}/src"/>
-	<property name="build.dir"   value="${basedir}/bin"/>
-	<property name="doc.dir"     value="${basedir}/docs"/>
-	<property name="lib.dir"     value="${basedir}/lib"/>
-	<property name="classes.dir" value="${build.dir}"/>
-	<property name="jar.dir"     value="${build.dir}/publish"/>
-	<property name="cfg.dir"	 value="${basedir}/config"/>
-	<property name="ivy.dep.file" value="${basedir}/dependencies.xml" />
+	<property name="src.dir"      value="${basedir}/src"/>
+	<property name="build.dir"    value="${basedir}/bin"/>
+	<property name="doc.dir"      value="${basedir}/docs"/>
+	<property name="lib.dir"      value="${basedir}/lib"/>
+	<property name="classes.dir"  value="${build.dir}"/>
+	<property name="jar.dir"      value="${build.dir}/publish"/>
+	<property name="cfg.dir"	    value="${basedir}/config"/>
+	<property name="ivy.dep.file" value="${basedir}/dependencies.xml"/>
+	<property name="dist.dir"     value="${basedir}/dist"/>
+	<property name="distlib.dir"  value="${dist.dir}/lib"/>
+	<property name="distcfg.dir"  value="${dist.dir}/cfg"/>
+	<property name="distbin.dir"  value="${dist.dir}/bin"/>
 
 	<!--	<property file="build.properties" />	-->
 
@@ -28,8 +32,9 @@
 
 
 	<target name="clean" description="Tidy up the workspace">
-		<delete failonerror="false" dir="${build.dir}" />
-		<delete failonerror="false" dir="ivy-report" />
+		<delete failonerror="false" dir="${build.dir}"/>
+		<delete failonerror="false" dir="ivy-report"/>
+		<delete failonerror="false" dir="${dist.dir}"/>
 		<delete>
 			<fileset defaultexcludes="no" dir="${src.dir}" includes="**/*~"/>
 		</delete>
@@ -48,12 +53,12 @@
 	</target>
 
 	<target name="jar" depends="compile" description="Create .jar file of the project">
-			<mkdir dir="${jar.dir}"/>
-			<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
-					<manifest>
-							<attribute name="Main-Class" value="${main-class}"/>
-					</manifest>
-			</jar>
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
 	</target>
 
 	<target name="jarbig" depends="compile" description="Create .jar file of the project">
@@ -119,6 +124,22 @@
 
 	<target name="ivy-cleancache">
 		<ivy:cleancache />
+	</target>
+
+	<target name="dist" depends="compile" description="Does all what is needed to distrubute the result.">
+		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${distlib.dir}"/>
+		<mkdir dir="${distcfg.dir}"/>
+		<mkdir dir="${distbin.dir}"/>
+		<jar destfile="${distbin.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+		<copydir src="${cfg.dir}" dest="${distcfg.dir}"/>
+		<copydir src="${lib.dir}" dest="${distlib.dir}"/>
+		<copy file="${basedir}\README.md" tofile="${dist.dir}\README.md"/>
+		<copy file="${basedir}\run.bat" tofile="${dist.dir}\run.bat"/>
 	</target>
 
 </project>

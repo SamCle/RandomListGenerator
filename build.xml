@@ -157,6 +157,13 @@
 		<copy file="${basedir}\README.md" tofile="${dist.dir}\README.md"/>
 		<copy file="${basedir}\run.bat" tofile="${dist.dir}\run.bat"/>
 		<copy file="${basedir}\run.sh" tofile="${dist.dir}\run.sh"/>
+		<exec executable="rm" osfamily="UNIX">
+			<arg line="${dist.dir}/run.sh"/>
+		</exec>
+        <exec executable="cp" osfamily="UNIX">
+            <arg line="${basedir}/run.sh ${dist.dir}/run.sh"/>
+        </exec>
+
 	</target>
 
 </project>

@@ -8,4 +8,4 @@ comments/
 /testOutput.txt
 gnuplotscript.sh
 .ant-targets-build.xml
-config/log4j2.xml
+cfg/log4j2.xml

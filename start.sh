@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main=RandomListGenerator
-logConfig=config/log4j2.xml
+logConfig=cfg/log4j2.xml
 
 #for i in `seq 1 10000`;
 

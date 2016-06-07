@@ -7,6 +7,9 @@ import org.apache.commons.cli.*;
 import org.apache.logging.log4j.*;
 
 public class PropertiesHandler {
+
+  private static final Logger log = LogManager.getLogger(PropertiesHandler.class.getName());
+
   private long iMin;
   private long iMax;
   private  int iVar;
@@ -16,7 +19,7 @@ public class PropertiesHandler {
   private long lLength;
 
   public PropertiesHandler(CommandLine commandLine, String defaultProperties){
-    Logger log = LogManager.getLogger();
+
     String propFile = commandLine.getOptionValue("p", defaultProperties);
     Properties properties = readProperties(propFile);
 

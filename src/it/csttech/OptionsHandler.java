@@ -11,6 +11,7 @@ import org.apache.logging.log4j.*;
 */
 public class OptionsHandler {
 
+  private static final Logger log = LogManager.getLogger(OptionsHandler.class.getName());
   private CommandLine commandLine;
   private boolean helpCalled;
 
@@ -19,7 +20,6 @@ public class OptionsHandler {
   */
   OptionsHandler(String[] args){
 
-    Logger log = LogManager.getLogger();
     this.helpCalled = false;
 
     Options options = new Options();
@@ -36,8 +36,11 @@ public class OptionsHandler {
     try {
       commandLine = parser.parse(options, args);
     } catch (Exception e) {
-      log.error("Option parser is not working");
-      e.printStackTrace();
+      log.error("Option parser is not working, have you checked the possible options?");
+      HelpFormatter formatter = new HelpFormatter();
+      formatter.printHelp("RandomListGenerator [options]. Where the possible options are:", options);
+      helpCalled = true;
+      e.getMessage();
     }
     if (commandLine.hasOption("h")) {
       HelpFormatter formatter = new HelpFormatter();

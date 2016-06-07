@@ -11,12 +11,14 @@
 	<property name="lib.dir"      value="${basedir}/lib"/>
 	<property name="classes.dir"  value="${build.dir}"/>
 	<property name="jar.dir"      value="${build.dir}/publish"/>
-	<property name="cfg.dir"	    value="${basedir}/config"/>
+	<property name="cfg.dir"	    value="${basedir}/cfg"/>
 	<property name="ivy.dep.file" value="${basedir}/dependencies.xml"/>
 	<property name="dist.dir"     value="${basedir}/dist"/>
 	<property name="distlib.dir"  value="${dist.dir}/lib"/>
 	<property name="distcfg.dir"  value="${dist.dir}/cfg"/>
 	<property name="distbin.dir"  value="${dist.dir}/bin"/>
+
+	<property name="libset.dir" value="${lib.dir}" relative="yes" />
 
 	<!--	<property file="build.properties" />	-->
 
@@ -30,6 +32,18 @@
 		</fileset>
 	</path>
 
+	<path id="lib.classpath">
+		<fileset dir="${libset.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- convert build.classpath to mf.classpath (the string needed for the manifest task) -->
+	<pathconvert property="mf.classpath" pathsep=" ">
+		<path refid="lib.classpath" />
+		<globmapper from="${basedir}${file.separator}*" to="..${file.separator}*" />
+	</pathconvert>
+	<echo message="Checking available libraries: ${mf.classpath}" />
 
 	<target name="clean" description="Tidy up the workspace">
 		<delete failonerror="false" dir="${build.dir}"/>
@@ -134,12 +148,15 @@
 		<jar destfile="${distbin.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}"/>
+				<attribute name="Class-Path" value="${mf.classpath}" />
 			</manifest>
+			<!--fileset dir="${lib.dir}" includes="**/*.jar" /-->
 		</jar>
 		<copydir src="${cfg.dir}" dest="${distcfg.dir}"/>
 		<copydir src="${lib.dir}" dest="${distlib.dir}"/>
 		<copy file="${basedir}\README.md" tofile="${dist.dir}\README.md"/>
 		<copy file="${basedir}\run.bat" tofile="${dist.dir}\run.bat"/>
+		<copy file="${basedir}\run.sh" tofile="${dist.dir}\run.sh"/>
 	</target>
 
 </project>

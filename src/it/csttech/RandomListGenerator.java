@@ -20,7 +20,7 @@ public class RandomListGenerator {
 	private static long iMax;
 	private static int iVar;
 	private static int iSize;
-	private static final String DEFAULT_PROPERTIES = "./config/RandomListGenerator.properties";
+	private static final String DEFAULT_PROPERTIES = "./cfg/RandomListGenerator.properties";
 	private static boolean appender;
 	private static long lLength;
 	private static File outputFile;

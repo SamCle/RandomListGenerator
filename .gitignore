@@ -9,3 +9,4 @@ comments/
 gnuplotscript.sh
 .ant-targets-build.xml
 cfg/log4j2.xml
+dist/

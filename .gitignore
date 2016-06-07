@@ -5,6 +5,7 @@ bin/
 log/
 comments/
 /output.txt
+/input.txt
 /testOutput.txt
 gnuplotscript.sh
 .ant-targets-build.xml

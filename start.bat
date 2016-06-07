@@ -2,7 +2,7 @@
 
 	set MAIN_CLASS_FILE="it.csttech.RandomListGenerator"
 	set CLASS_PATH=".;lib\*;bin"
-	set LOG_CONFIG="config\log4j2.xml"
+	set LOG_CONFIG="cfg\log4j2.xml"
 
 
 	echo --------------------------------------------------------------

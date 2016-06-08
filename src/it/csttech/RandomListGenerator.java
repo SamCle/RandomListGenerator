@@ -16,24 +16,17 @@ import org.apache.logging.log4j.*;
 public class RandomListGenerator {
 
 	private static final Logger log = LogManager.getLogger(RandomListGenerator.class.getName());
-	private static long iMin;
-	private static long iMax;
-	private static int iVar;
-	private static int iSize;
 	private static final String DEFAULT_PROPERTIES = "./cfg/RandomListGenerator.properties";
-	private static boolean appender;
-	private static long lLength;
-	private static File outputFile;
 	private static OptionsHandler opt;
 
 	public RandomListGenerator(PropertiesHandler propertiesHandler){
-		iMin  = propertiesHandler.getMin();
-		iMax  = propertiesHandler.getMax();
-		iVar  = propertiesHandler.getVar();
-		iSize = propertiesHandler.getSize();
-		outputFile = propertiesHandler.getOutputFile();
-		appender = propertiesHandler.isAppender();
-		lLength = Math.round(Math.ceil(Math.log10(iMax)));
+		long iMin  = propertiesHandler.getMin();
+		long iMax  = propertiesHandler.getMax();
+		int iVar  = propertiesHandler.getVar();
+		int iSize = propertiesHandler.getSize();
+		File outputFile = propertiesHandler.getOutputFile();
+		boolean appender = propertiesHandler.isAppender();
+		long lLength = Math.round(Math.ceil(Math.log10(iMax)));
 
 		RandomListBuilder randomListBuilder = new RandomListBuilder(iMin, iMax, iVar, iSize);
 		List<Long> list = randomListBuilder.getList();

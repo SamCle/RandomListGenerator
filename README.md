@@ -24,12 +24,12 @@ A properties file is included in the cfg/ folder, which contains the following d
 	default.maximum=99999
 	default.size=100
 	default.outputFile=output.txt
-	dafault.variation=50
+	dafault.variation=45
 
 You can provide your own properties file and feed it to the program with the -p option.
 
 The variation parameter is a technical gimmick which is used in the program to increase the
-randomness of the numbers that are generated. We recommend a (maximum) value of 50.
+randomness of the numbers that are generated. We recommend a (maximum) value of 45.
 
 The append option is by default set to false, which means the output file specified will be
 overwritten; in order to activate it, simply add the option -a.

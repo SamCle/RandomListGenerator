@@ -10,14 +10,14 @@ public class PropertiesHandler {
 
   private static final Logger log = LogManager.getLogger(PropertiesHandler.class.getName());
 
-  private long iMin;
-  private long iMax;
-  private  int iVar;
-  private  int iSize;
+  private long min;
+  private long max;
+  private  int var;
+  private  int size;
   private File outputFile;
   private File inputFile;
   private boolean appender;
-  private long lLength;
+  private long length;
   private List<String> nameList;
   private Properties properties;
   private CommandLine commandLine;
@@ -28,17 +28,17 @@ public class PropertiesHandler {
     String propFile  = commandLine.getOptionValue("p", defaultProperties);
     properties = readProperties(propFile);
 
-    iMin =    Long.parseLong(commandLine.getOptionValue("m",  properties.getProperty("default.minimum"   )).trim());
-    iMax =    Long.parseLong(commandLine.getOptionValue("M",  properties.getProperty("default.maximum"   )).trim());
-    iVar =  Integer.parseInt(commandLine.getOptionValue("v",  properties.getProperty("dafault.variation" )).trim());
-    outputFile =    new File(commandLine.getOptionValue("of", properties.getProperty("default.outputFile")).trim());
+    min =    Long.parseLong(commandLine.getOptionValue("m",  properties.getProperty("default.minimum"   )).trim());
+    max =    Long.parseLong(commandLine.getOptionValue("M",  properties.getProperty("default.maximum"   )).trim());
+    var =  Integer.parseInt(commandLine.getOptionValue("v",  properties.getProperty("dafault.variation" )).trim());
+    outputFile =   new File(commandLine.getOptionValue("of", properties.getProperty("default.outputFile")).trim());
     if (commandLine.hasOption("if")) {
       inputFile = new File(commandLine.getOptionValue("if").trim());
       populateNameList();
     }
-    appender =               commandLine.hasOption("a");
-    lLength = Math.round(Math.ceil(Math.log10(iMax)));
-    iSize = calculateSize();
+    appender =              commandLine.hasOption("a");
+    length = Math.round(Math.ceil(Math.log10(max)));
+    size = calculateSize();
     log.trace("Properties are now ready.");
   }
 
@@ -56,13 +56,13 @@ public class PropertiesHandler {
   }
 
   private int calculateSize(){
-    int iResult;
+    int result;
     if (hasInputFile()) {
-      iResult = nameList.size();
+      result = nameList.size();
     } else {
-      iResult = Integer.parseInt(commandLine.getOptionValue("s",  properties.getProperty("default.size")).trim());
+      result = Integer.parseInt(commandLine.getOptionValue("s",  properties.getProperty("default.size")).trim());
     }
-    return iResult;
+    return result;
   }
 
   private Properties readProperties( String propFile ){
@@ -79,19 +79,19 @@ public class PropertiesHandler {
   }
 
   public long getMin(){
-    return iMin;
+    return min;
   }
 
   public long getMax(){
-    return iMax;
+    return max;
   }
 
   public int getVar(){
-    return iVar;
+    return var;
   }
 
   public int getSize(){
-    return iSize;
+    return size;
   }
 
   public File getOutputFile(){
@@ -111,7 +111,7 @@ public class PropertiesHandler {
   }
 
   public long getLength(){
-    return lLength;
+    return length;
   }
 
 }

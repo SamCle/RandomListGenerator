@@ -12,9 +12,9 @@ public class UniformRandom {
 	*/
 	public SecureRandom secureRandom;
 
-	long iMin;
-	long iMax;
-	int iSize;
+	long min;
+	long max;
+	int size;
 
 	/**
 	* Constructor that sets all the variables needed.
@@ -23,10 +23,10 @@ public class UniformRandom {
 	* @param iSize Size of the list that is going to be created.
 	* <p> Please note: You are advised to instantiate SecureRandom using the following: secureRandom = SecureRandom.getInstanceStrong();
 	*/
-	public UniformRandom(long iMin, long iMax, int iSize) {
-		this.iMin = iMin;
-		this.iMax = iMax;
-		this.iSize = iSize;
+	public UniformRandom(long min, long max, int size) {
+		this.min = min;
+		this.max = max;
+		this.size = size;
 		secureRandom = new SecureRandom();
 	}
 
@@ -36,8 +36,8 @@ public class UniformRandom {
 	* @param iNext The second number to be checked.
 	* @return true if the values respect the condition, false otherwise.
 	*/
-	public boolean checkNext(long iPrevious, long iNext) {
-		return !(Math.abs(iNext - iPrevious) <= 1);
+	public boolean checkNext(long previous, long next) {
+		return !(Math.abs(next - previous) <= 1);
 	}
 
 	/**

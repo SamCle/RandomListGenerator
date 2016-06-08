@@ -15,18 +15,18 @@ import org.apache.logging.log4j.*;
 */
 public class RandomListBuilder {
 
-  private long iMin;
-  private long iMax;
-  private int iVar;
-  private int iSize;
+  private long min;
+  private long max;
+  private int var;
+  private int size;
   private List<Long> list;
 
-  public RandomListBuilder(long iMin, long iMax, int iVar, int iSize){
-    this.iMin = iMin;
-    this.iMax = iMax;
-    this.iSize = iSize;
-    this.iVar = iVar;
-    UniformRandom uniformRandom = new UniformRandom(iMin, iMax, iSize);
+  public RandomListBuilder(long min, long max, int var, int size){
+    this.min = min;
+    this.max = max;
+    this.size = size;
+    this.var = var;
+    UniformRandom uniformRandom = new UniformRandom(min, max, size);
     this.list = setList(uniformRandom);
   }
 
@@ -34,32 +34,32 @@ public class RandomListBuilder {
     List<Long> separators = new ArrayList<Long>();
     long separator;
 
-    separators.add(0, iMin);
-    for(int i = 1; i < iSize; i++) {
-      separator =  (i) * (iMax - iMin) / iSize + iMin;
-      separator += Math.floor(2 * (uniformRandom.nextDouble() - 0.5) * ((iMax - iMin) / iSize) * iVar / 100);
+    separators.add(0, min);
+    for(int i = 1; i < size; i++) {
+      separator =  (i) * (max - min) / size + min;
+      separator += Math.floor(2 * (uniformRandom.nextDouble() - 0.5) * ((max - min) / size) * var / 100);
       separators.add(i, separator);
     }
-    separators.add(iSize, iMax);
+    separators.add(size, max);
 
     return separators;
   }
 
   private List<Long> setList(UniformRandom uniformRandom) {
     List<Long> separators = setSeparators(uniformRandom);
-    List<Long> list = new ArrayList<Long>(iSize);
+    List<Long> list = new ArrayList<Long>(size);
     long point;
-    double dMaximumAttempts = 100 * ( iMax - iMin ) / iSize;
-    int iAttemptsCounter = 0;
+    double maximumAttempts = 100 * ( max - min ) / size;
+    int attemptsCounter = 0;
 
-    for(int i = 0; i < iSize; ) {
-      iAttemptsCounter = 0;
+    for(int i = 0; i < size; ) {
+      attemptsCounter = 0;
       point = (long) Math.floor(uniformRandom.nextDouble() * (separators.get(i+1) - separators.get(i)) + separators.get(i));
       if(uniformRandom.checkNext( (i == 0? -2 : list.get(i-1)), point)) {
         list.add(i, point);
         i++;
       } else {
-        if ( iAttemptsCounter++ > dMaximumAttempts ){
+        if ( attemptsCounter++ > maximumAttempts ){
           return null;
         }
       }

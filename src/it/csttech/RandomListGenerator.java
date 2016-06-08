@@ -19,22 +19,22 @@ public class RandomListGenerator {
 	private static OptionsHandler opt;
 
 	public RandomListGenerator(PropertiesHandler propertiesHandler){
-		long iMin  = propertiesHandler.getMin();
-		long iMax  = propertiesHandler.getMax();
-		int iVar  = propertiesHandler.getVar();
-		int iSize = propertiesHandler.getSize();
+		long min  = propertiesHandler.getMin();
+		long max  = propertiesHandler.getMax();
+		int var  = propertiesHandler.getVar();
+		int size = propertiesHandler.getSize();
 		File outputFile = propertiesHandler.getOutputFile();
 		boolean appender = propertiesHandler.isAppender();
-		long lLength = Math.round(Math.ceil(Math.log10(iMax)));
+		long length = Math.round(Math.ceil(Math.log10(max)));
 
-		RandomListBuilder randomListBuilder = new RandomListBuilder(iMin, iMax, iVar, iSize);
+		RandomListBuilder randomListBuilder = new RandomListBuilder(min, max, var, size);
 		List<Long> list = randomListBuilder.getList();
 		if(propertiesHandler.hasInputFile()){
 			long shuffleSeed = System.nanoTime();
 			Collections.shuffle(list, new Random(shuffleSeed));
-			RandomOutput.printOutput(list, outputFile, appender, lLength, propertiesHandler.getNameList());
+			RandomOutput.printOutput(list, outputFile, appender, length, propertiesHandler.getNameList());
 		} else {
-			RandomOutput.printOutput(list, outputFile, appender, lLength);
+			RandomOutput.printOutput(list, outputFile, appender, length);
 		}
 	}
 

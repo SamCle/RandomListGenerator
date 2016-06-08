@@ -22,7 +22,7 @@ public class RandomListBuilder {
   private int size;
   private List<Long> list;
 
-  public RandomListBuilder(long min, long max, int var, int size){
+  public RandomListBuilder(long min, long max, int var, int size) throws RandomlistException {
     this.min = min;
     this.max = max;
     this.size = size;
@@ -45,12 +45,11 @@ public class RandomListBuilder {
     return separators;
   }
 
-  private List<Long> setList(UniformRandom uniformRandom) {
+  private List<Long> setList(UniformRandom uniformRandom) throws RandomlistException {
     List<Long> separators = setSeparators(uniformRandom);
     List<Long> list = new ArrayList<Long>(size);
     long point;
     int maximumAttempts = (int) Math.ceil( 100 * ( max - min ) / size );
-    log.trace("This program will run for at most " + maximumAttempts + " attempts.");
     int attemptsCounter = 0;
 
     for(int i = 0; i < size; ) {
@@ -62,7 +61,7 @@ public class RandomListBuilder {
       } else {
         if ( attemptsCounter++ > maximumAttempts ){
           log.error(RandomListBuilder.class.getName() + " won't work on this options, please try to reduce the value of size.");
-          return null;
+          throw new RandomlistException();
         }
       }
     }

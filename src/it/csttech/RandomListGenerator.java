@@ -18,7 +18,7 @@ public class RandomListGenerator {
 	private static final Logger log = LogManager.getLogger(RandomListGenerator.class.getName());
 	private static OptionsHandler opt;
 
-	public RandomListGenerator(PropertiesHandler propertiesHandler){
+	public RandomListGenerator(PropertiesHandler propertiesHandler) throws RandomlistException {
 		long min  = propertiesHandler.getMin();
 		long max  = propertiesHandler.getMax();
 		int var  = propertiesHandler.getVar();
@@ -26,7 +26,6 @@ public class RandomListGenerator {
 		File outputFile = propertiesHandler.getOutputFile();
 		boolean appender = propertiesHandler.isAppender();
 		long length = Math.round(Math.ceil(Math.log10(max)));
-
 		RandomListBuilder randomListBuilder = new RandomListBuilder(min, max, var, size);
 		List<Long> list = randomListBuilder.getList();
 		if(propertiesHandler.hasInputFile()){
@@ -36,6 +35,7 @@ public class RandomListGenerator {
 		} else {
 			RandomOutput.printOutput(list, outputFile, appender, length);
 		}
+
 	}
 
 	/**
@@ -52,10 +52,11 @@ public class RandomListGenerator {
 		if(opt.isHelpCalled()) {
 			return;
 		}
-
-		RandomListGenerator randomListGenerator = new RandomListGenerator(propertiesHandler);
-
-		log.trace("Done! Check output file.\n"); //Exit message
-
+		try{
+			RandomListGenerator randomListGenerator = new RandomListGenerator(propertiesHandler);
+			log.trace("Done! Check output file.\n"); //Exit message
+		}catch (RandomlistException e){
+			e.getMessage();
+		}
 	}
 }

@@ -48,13 +48,28 @@ public class PropertiesHandler {
   private void populateNameList(){
     nameList = new ArrayList<String>();
     String line;
-    try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile)))) {
+	InputStream input = null;
+	BufferedReader br = null;
+    try {
+      input = new FileInputStream(inputFile);
+      br = new BufferedReader(new InputStreamReader(input));
       while ((line = br.readLine()) != null){
         nameList.add(line);
       }
     } catch (IOException e) {
       log.error("File not recognized.");
       e.printStackTrace();
+    } finally {
+      try {
+		if(input != null) {
+        	input.close();
+		}
+		if(br != null) {
+			br.close();
+		}
+      } catch(IOException ioe) {
+        ioe.printStackTrace();
+      }
     }
   }
 

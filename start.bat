@@ -3,7 +3,7 @@
 	set MAIN_CLASS_FILE="it.csttech.RandomListGenerator"
 	set CLASS_PATH=".;lib\*;bin"
 	set LOG_CONFIG="cfg\log4j2.xml"
-	set DEFAULT_PROPERTIES="./cfg/RandomListGenerator.properties"
+	set DEFAULT_PROPERTIES="./cfg/Default.properties"
 
 
 	echo -------------------------------------------------------------------------

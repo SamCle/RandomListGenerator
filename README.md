@@ -6,7 +6,6 @@ the user. Such numbers will always be spaced out over the whole interval, as the
 from clustering near any integer value. This means that asking to produce a 'large' amount of
 numbers in a relatively small interval will result in an error and the program will stop.
 
-
 Executing the program (use the appropriate run.* script) followed by -h shows the options:
 	usage: RandomListGenerator [options]. Where the possible options are:
 	 -a,--append              Flag, appends new list to previous one.
@@ -19,14 +18,16 @@ Executing the program (use the appropriate run.* script) followed by -h shows th
 	 -s,--size <arg>          Size of the result.
 	 -v,--variation <arg>     Maximal change in boundaries.
 
-A properties file is included in the cfg/ folder, which contains the following default values:
-	default.minimum=0
-	default.maximum=99999
-	default.size=100
-	default.outputFile=output.txt
-	dafault.variation=45
+A default properties file should include the following:
+default.minimum=0
+default.maximum=99999
+default.size=100
+default.outputFile=output.txt
+dafault.variation=45
 
-You can provide your own properties file and feed it to the program with the -p option.
+You must specify the file containing the default properties in rune run.* script.
+
+You can provide different  property files and feed it to the program with the -p option.
 
 The variation parameter is a technical gimmick which is used in the program to increase the
 randomness of the numbers that are generated. We recommend a (maximum) value of 45.

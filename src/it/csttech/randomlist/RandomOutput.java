@@ -40,7 +40,7 @@ public class RandomOutput {
 
 	}
 
-	public static int calculateMaximumLength(List<String> nameList){
+	private static int calculateMaximumLength(List<String> nameList){
 		int result = 0;
 		for ( String j : nameList ) {
 			if( ! j.equals(null) ){

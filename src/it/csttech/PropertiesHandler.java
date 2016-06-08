@@ -28,12 +28,12 @@ public class PropertiesHandler {
     String propFile  = commandLine.getOptionValue("p", defaultProperties);
     properties = readProperties(propFile);
 
-    iMin =    Long.parseLong(commandLine.getOptionValue("m",  properties.getProperty("default.minimum"   )));
-    iMax =    Long.parseLong(commandLine.getOptionValue("M",  properties.getProperty("default.maximum"   )));
-    iVar =  Integer.parseInt(commandLine.getOptionValue("v",  properties.getProperty("dafault.variation" )));
-    outputFile =    new File(commandLine.getOptionValue("of", properties.getProperty("default.outputFile")));
+    iMin =    Long.parseLong(commandLine.getOptionValue("m",  properties.getProperty("default.minimum"   )).trim());
+    iMax =    Long.parseLong(commandLine.getOptionValue("M",  properties.getProperty("default.maximum"   )).trim());
+    iVar =  Integer.parseInt(commandLine.getOptionValue("v",  properties.getProperty("dafault.variation" )).trim());
+    outputFile =    new File(commandLine.getOptionValue("of", properties.getProperty("default.outputFile")).trim());
     if (commandLine.hasOption("if")) {
-      inputFile  = new File(commandLine.getOptionValue("if"));
+      inputFile  = new File(commandLine.getOptionValue("if").trim());
     }
     appender =               commandLine.hasOption("a");
     lLength = Math.round(Math.ceil(Math.log10(iMax)));
@@ -61,7 +61,7 @@ public class PropertiesHandler {
     if (hasInputFile()) {
       iResult = populateNameList().size();
     } else {
-      iResult = Integer.parseInt(commandLine.getOptionValue("s",  properties.getProperty("default.size")));
+      iResult = Integer.parseInt(commandLine.getOptionValue("s",  properties.getProperty("default.size")).trim());
     }
     return iResult;
   }

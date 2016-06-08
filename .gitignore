@@ -4,6 +4,7 @@ lib/
 bin/
 log/
 comments/
+/input.txt
 /output.txt
 /input.txt
 /testOutput.txt

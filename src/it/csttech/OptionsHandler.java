@@ -43,11 +43,13 @@ public class OptionsHandler {
       formatter.printHelp("RandomListGenerator [options]. Where the possible options are:", options);
       helpCalled = true;
       e.getMessage();
+      return;
     }
     if (commandLine.hasOption("h")) {
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp("RandomListGenerator [options]. Where the possible options are:", options);
       helpCalled = true;
+      return;
     }
     log.trace("Options have been read.");
   }

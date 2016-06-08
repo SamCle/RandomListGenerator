@@ -24,6 +24,9 @@ public class PropertiesHandler {
 
   public PropertiesHandler(CommandLine commandLine, String defaultProperties){
 
+    if (commandLine.hasOption("h")) {
+      return;
+    }
     this.commandLine = commandLine;
     String propFile  = commandLine.getOptionValue("p", defaultProperties);
     properties = readProperties(propFile);

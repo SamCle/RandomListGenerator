@@ -15,6 +15,7 @@ import org.apache.logging.log4j.*;
 */
 public class RandomListBuilder {
 
+  private static final Logger log = LogManager.getLogger(RandomListBuilder.class.getName());
   private long min;
   private long max;
   private int var;
@@ -41,7 +42,6 @@ public class RandomListBuilder {
       separators.add(i, separator);
     }
     separators.add(size, max);
-
     return separators;
   }
 
@@ -49,17 +49,19 @@ public class RandomListBuilder {
     List<Long> separators = setSeparators(uniformRandom);
     List<Long> list = new ArrayList<Long>(size);
     long point;
-    double maximumAttempts = 100 * ( max - min ) / size;
+    int maximumAttempts = (int) Math.ceil( 100 * ( max - min ) / size );
+    log.trace("This program will run for at most " + maximumAttempts + " attempts.");
     int attemptsCounter = 0;
 
     for(int i = 0; i < size; ) {
-      attemptsCounter = 0;
       point = (long) Math.floor(uniformRandom.nextDouble() * (separators.get(i+1) - separators.get(i)) + separators.get(i));
       if(uniformRandom.checkNext( (i == 0? -2 : list.get(i-1)), point)) {
         list.add(i, point);
         i++;
+        attemptsCounter = 0;
       } else {
         if ( attemptsCounter++ > maximumAttempts ){
+          log.error(RandomListBuilder.class.getName() + " won't work on this options, please try to reduce the value of size.");
           return null;
         }
       }

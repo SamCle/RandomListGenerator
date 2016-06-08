@@ -33,7 +33,8 @@ public class PropertiesHandler {
     iVar =  Integer.parseInt(commandLine.getOptionValue("v",  properties.getProperty("dafault.variation" )).trim());
     outputFile =    new File(commandLine.getOptionValue("of", properties.getProperty("default.outputFile")).trim());
     if (commandLine.hasOption("if")) {
-      inputFile  = new File(commandLine.getOptionValue("if").trim());
+      inputFile = new File(commandLine.getOptionValue("if").trim());
+      populateNameList();
     }
     appender =               commandLine.hasOption("a");
     lLength = Math.round(Math.ceil(Math.log10(iMax)));
@@ -41,8 +42,8 @@ public class PropertiesHandler {
     log.trace("Properties are now ready.");
   }
 
-  private List<String> populateNameList(){
-    List<String> nameList = new ArrayList<String>();
+  private void populateNameList(){
+    nameList = new ArrayList<String>();
     String line;
     try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile)))) {
       while ((line = br.readLine()) != null){
@@ -52,14 +53,12 @@ public class PropertiesHandler {
       log.error("File not recognized.");
       e.printStackTrace();
     }
-    this.nameList = nameList;
-    return nameList;
   }
 
   private int calculateSize(){
     int iResult;
     if (hasInputFile()) {
-      iResult = populateNameList().size();
+      iResult = nameList.size();
     } else {
       iResult = Integer.parseInt(commandLine.getOptionValue("s",  properties.getProperty("default.size")).trim());
     }

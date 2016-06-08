@@ -24,13 +24,9 @@ public class RandomOutput {
 	public static void printOutput(List<Long> list, File outputFile, boolean appender, long lLength, List<String> nameList) {
 		try(PrintWriter printout = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, appender)))) {
 			int iMaximumLength = calculateMaximumLength(nameList);
-			String spaces;
 			for(int i = 0; i < list.size(); i++) {
-				spaces = "";
-				if(nameList.get(i).length()<iMaximumLength) {
-					spaces = new String(new char[iMaximumLength - nameList.get(i).length()]).replace("\0", " ");
-				}
-				printout.print(nameList.get(i) + spaces + "\t");
+				printout.printf("%-" + iMaximumLength + "s", nameList.get(i));
+				printout.print("\t");
 				printout.printf( "%0" + lLength + "d%n", list.get(i));
 			}
 

@@ -16,7 +16,6 @@ import org.apache.logging.log4j.*;
 public class RandomListGenerator {
 
 	private static final Logger log = LogManager.getLogger(RandomListGenerator.class.getName());
-	private static final String DEFAULT_PROPERTIES = "./cfg/RandomListGenerator.properties";
 	private static OptionsHandler opt;
 
 	public RandomListGenerator(PropertiesHandler propertiesHandler){
@@ -47,7 +46,7 @@ public class RandomListGenerator {
 
 		opt = new OptionsHandler(args);
 		CommandLine commandLine = opt.getCommandLine();
-		String propFile = commandLine.getOptionValue("p", DEFAULT_PROPERTIES);
+		String propFile = commandLine.getOptionValue("p", commandLine.getOptionValue("dp"));
 		PropertiesHandler propertiesHandler = new PropertiesHandler(commandLine, propFile);
 
 		if(opt.isHelpCalled()) {

@@ -24,15 +24,16 @@ public class OptionsHandler {
 
     Options options = new Options();
     DefaultParser parser = new DefaultParser();
-    options.addOption(new Option("h",  "help",       false, "Shows help."                            ));
-    options.addOption(new Option("m",  "minimum",    true,  "Lower bound for the result."            ));
-    options.addOption(new Option("M",  "Maximum",    true,  "Upper bound for the result."            ));
-    options.addOption(new Option("s",  "size",       true,  "Size of the result."                    ));
-    options.addOption(new Option("of", "outputfile", true,  "Output file name."                      ));
-    options.addOption(new Option("p",  "properties", true,  "Config file name."                      ));
-    options.addOption(new Option("v",  "variation",  true,  "Maximal change in boundaries."          ));
-    options.addOption(new Option("if", "inputfile",  true,  "Input file name."                       ));
-    options.addOption(new Option("a",  "append",     false, "Flag, appends new list to previous one."));
+    options.addOption(new Option("h",  "help",        false, "Shows help."                                                 ));
+    options.addOption(new Option("dp", "defaultProp", true,  "Default config file name - settable through the start file." ));
+    options.addOption(new Option("m",  "minimum",     true,  "Lower bound for the result."                                 ));
+    options.addOption(new Option("M",  "Maximum",     true,  "Upper bound for the result."                                 ));
+    options.addOption(new Option("s",  "size",        true,  "Size of the result."                                         ));
+    options.addOption(new Option("of", "outputfile",  true,  "Output file name."                                           ));
+    options.addOption(new Option("p",  "properties",  true,  "Configuration file name."                                    ));
+    options.addOption(new Option("v",  "variation",   true,  "Maximal random change in boundaries."                        ));
+    options.addOption(new Option("if", "inputfile",   true,  "Input file name."                                            ));
+    options.addOption(new Option("a",  "append",      false, "Flag, appends new list to previous one."                     ));
 
     try {
       commandLine = parser.parse(options, args);

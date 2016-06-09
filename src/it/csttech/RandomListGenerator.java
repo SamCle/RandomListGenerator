@@ -28,14 +28,13 @@ public class RandomListGenerator {
 		long length = Math.round(Math.ceil(Math.log10(max)));
 		RandomListBuilder randomListBuilder = new RandomListBuilder(min, max, var, size);
 		List<Long> list = randomListBuilder.getList();
-		if(propertiesHandler.hasInputFile()){
+		if(propertiesHandler.hasInputFile()) {
 			long shuffleSeed = System.nanoTime();
 			Collections.shuffle(list, new Random(shuffleSeed));
 			RandomOutput.printOutput(list, outputFile, appender, length, propertiesHandler.getNameList());
 		} else {
 			RandomOutput.printOutput(list, outputFile, appender, length);
 		}
-
 	}
 
 	/**
@@ -44,18 +43,18 @@ public class RandomListGenerator {
 	*/
 	public static void main(String[] args) {
 
-		opt = new OptionsHandler(args);
-		CommandLine commandLine = opt.getCommandLine();
-		String propFile = commandLine.getOptionValue("p", commandLine.getOptionValue("dp"));
-		PropertiesHandler propertiesHandler = new PropertiesHandler(commandLine, propFile);
+		try {
+			opt = new OptionsHandler(args);
+			CommandLine commandLine = opt.getCommandLine();
+			String propFile = commandLine.getOptionValue("p", commandLine.getOptionValue("dp"));
+			PropertiesHandler propertiesHandler = new PropertiesHandler(commandLine, propFile);
 
-		if(opt.isHelpCalled()) {
-			return;
-		}
-		try{
+			if(opt.isHelpCalled()) {
+				return;
+			}
 			RandomListGenerator randomListGenerator = new RandomListGenerator(propertiesHandler);
 			log.trace("Done! Check output file.\n"); //Exit message
-		}catch (RandomlistException e){
+		} catch (RandomlistException e) {
 			e.getMessage();
 		}
 	}

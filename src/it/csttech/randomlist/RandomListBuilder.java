@@ -65,11 +65,10 @@ public class RandomListBuilder {
         }
       }
     }
-
     return list;
   }
 
-  public List<Long> getList(){
+  public List<Long> getList() {
     return list;
   }
 

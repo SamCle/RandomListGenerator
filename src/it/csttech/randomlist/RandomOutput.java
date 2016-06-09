@@ -14,11 +14,9 @@ public class RandomOutput {
 			for(int i = 0; i < list.size(); i++) {
 				printout.printf("%0"+length+"d%n", list.get(i));
 			}
-
 		} catch (IOException e) {
 			e.getMessage();
 		}
-
 	}
 
 	public static void printOutput(List<Long> list, File outputFile, boolean appender, long length, List<String> nameList) {
@@ -29,11 +27,9 @@ public class RandomOutput {
 				printout.print("\t");
 				printout.printf( "%0" + length + "d%n", list.get(i));
 			}
-
 		} catch (IOException e) {
 			e.getMessage();
 		}
-
 	}
 
 	private static int calculateMaximumLength(List<String> nameList){
@@ -47,6 +43,4 @@ public class RandomOutput {
 		}
 		return result;
 	}
-
-
- }
+}

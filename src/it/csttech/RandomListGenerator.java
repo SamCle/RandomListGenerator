@@ -45,13 +45,12 @@ public class RandomListGenerator {
 
 		try {
 			opt = new OptionsHandler(args);
-			CommandLine commandLine = opt.getCommandLine();
-			String propFile = commandLine.getOptionValue("p", commandLine.getOptionValue("dp"));
-			PropertiesHandler propertiesHandler = new PropertiesHandler(commandLine, propFile);
-
 			if(opt.isHelpCalled()) {
 				return;
 			}
+			CommandLine commandLine = opt.getCommandLine();
+			String propFile = commandLine.getOptionValue("p", commandLine.getOptionValue("dp"));
+			PropertiesHandler propertiesHandler = new PropertiesHandler(commandLine, propFile);
 			RandomListGenerator randomListGenerator = new RandomListGenerator(propertiesHandler);
 			log.trace("Done! Check output file.\n"); //Exit message
 		} catch (RandomlistException e) {

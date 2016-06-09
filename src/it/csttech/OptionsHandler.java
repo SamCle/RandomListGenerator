@@ -15,10 +15,10 @@ public class OptionsHandler {
   private CommandLine commandLine;
   private Options options = new Options();
   private DefaultParser parser = new DefaultParser();
-  
+
   private String OS = System.getProperty("os.name").toLowerCase();
   private String helpMessage = isWindows()? "run.bat [options]. Where the possible options are:" : "./run.sh [options]. Where the possible options are:";
-  
+
   private boolean helpCalled;
 
   /**
@@ -46,7 +46,6 @@ public class OptionsHandler {
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp(helpMessage, options);
       helpCalled = true;
-      e.getMessage();
       return;
     }
     if (commandLine.hasOption("h")) {
